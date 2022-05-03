@@ -1,0 +1,85 @@
+.page {
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  min-height: 100vh;
+}
+
+.canvas {
+  aspect-ratio: 1 / 1;
+  background: black;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 3% 5% 5%;
+  color: white;
+  position: relative;
+}
+
+.text {
+  flex: 1 0 auto;
+  font-family: Graphik;
+  hyphens: auto;
+  line-height: 1.1;
+  position: relative;
+  /* z-index: 1; */
+}
+
+.byline {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.title {
+  font-family: Ivar Headline;
+  color: #adb5bd;
+  font-weight: 600;
+  font-feature-settings: 'pnum' on, 'onum' on;
+}
+
+.indices {
+  color: #868e96;
+  font-size: 0.5em;
+  font-family: SFCamera;
+}
+
+/* .dropCap:first-letter {
+  float: left;
+  font-family: Georgia;
+  font-size: 2.5em;
+  line-height: 0.25;
+  padding-top: 0.4em;
+  padding-right: 0.15em;
+} */
+
+.dropCap:first-letter {
+  position: relative;
+}
+
+.text:after {
+  content: "";
+  position: absolute;
+  height: 1.25em;
+  width: 1.35em;
+  background: #37B24D;
+  top: 0;
+  left: 0.02em;
+  /* z-index: -1; */
+  mix-blend-mode: hard-light;
+}
+
+.text.triangle:after {
+  content: "";
+  position: absolute;
+  background: #37B24D;
+  top: 0;
+  left: 0.02em;
+  /* z-index: -1; */
+  mix-blend-mode: hard-light;
+  width: 0;
+  height: 0;
+  border-left: 1.25em solid transparent;
+  border-right: 1.25em solid transparent;
+  border-bottom: 2.5em solid #37B24D;
+}
