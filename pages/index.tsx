@@ -40,6 +40,12 @@ const Home: NextPage = () => {
       </div>
 
       <div className={styles.declarationGrid}>
+        {Array.from(Array(100)).map((i) => (
+          <Declaration key={i}>
+            Government becomes destructive of these ends, it is the Right of the
+            People to alter
+          </Declaration>
+        ))}
         <Declaration>
           Government becomes destructive of these ends, it is the Right of the
           People to alter

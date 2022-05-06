@@ -7,28 +7,31 @@
 
 .canvas {
   aspect-ratio: 1 / 1;
-  background: black;
+  background: #212529;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding: 3% 5% 5%;
+  gap: clamp(.5rem, 3vmax, 1.5rem);
+  padding: max(7%, 1rem);
   color: white;
   position: relative;
+  line-height: 1.1;
 }
 
 .text {
   flex: 1 0 auto;
   font-family: Graphik;
   hyphens: auto;
-  line-height: 1.1;
   position: relative;
+  font-weight: bold;
   /* z-index: 1; */
 }
 
 .byline {
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.25rem;
+  line-height: 1.1;
 }
 
 .title {
@@ -42,6 +45,8 @@
   color: #868e96;
   font-size: 0.5em;
   font-family: SFCamera;
+
+  /* font-size: clamp(0.4em, 1.5vw, 0.6em); */
 }
 
 /* .dropCap:first-letter {
@@ -58,11 +63,14 @@
 }
 
 .text:after {
-  content: "";
+  /* content: ''; */
   position: absolute;
   height: 1.25em;
   width: 1.35em;
   background: #37B24D;
+  /* background: url("data:image/svg+xml,%3Csvg width='40' height='37' viewBox='0 0 40 37' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L39.0211 13.8197L31.7557 36.1803H8.2443L0.97887 13.8197L20 0Z' fill='%2337B24D'/%3E%3C/svg%3E%0A");
+  background-size: 1.25em, 1.35em; */
+  background-repeat: no-repeat;
   top: 0;
   left: 0.02em;
   /* z-index: -1; */
@@ -70,9 +78,9 @@
 }
 
 .text.triangle:after {
-  content: "";
+  content: '';
   position: absolute;
-  background: #37B24D;
+  background: #37b24d;
   top: 0;
   left: 0.02em;
   /* z-index: -1; */
@@ -81,5 +89,25 @@
   height: 0;
   border-left: 1.25em solid transparent;
   border-right: 1.25em solid transparent;
-  border-bottom: 2.5em solid #37B24D;
+  border-bottom: 2.5em solid #37b24d;
+}
+
+.background {
+  position: absolute;
+  inset: 0;
+  /* z-index: -1; */
+  mix-blend-mode: hard-light; 
+}
+
+.backgroundRect { 
+  mix-blend-mode: hard-light;
+}
+
+.globe {
+  position: absolute;
+  width: 180%;
+  height: 180%;
+  top: -20%;
+  left: -20%;
+  mix-blend-mode: hard-light;
 }
