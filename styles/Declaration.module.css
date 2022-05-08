@@ -20,11 +20,11 @@
 
 .text {
   flex: 1 0 auto;
-  font-family: Graphik;
+  font-family: Inter Display;
   hyphens: auto;
   position: relative;
   font-weight: bold;
-  /* z-index: 1; */
+  font-feature-settings: "salt", "ss02";
 }
 
 .byline {
@@ -45,18 +45,7 @@
   color: #868e96;
   font-size: 0.5em;
   font-family: SFCamera;
-
-  /* font-size: clamp(0.4em, 1.5vw, 0.6em); */
 }
-
-/* .dropCap:first-letter {
-  float: left;
-  font-family: Georgia;
-  font-size: 2.5em;
-  line-height: 0.25;
-  padding-top: 0.4em;
-  padding-right: 0.15em;
-} */
 
 .dropCap:first-letter {
   position: relative;
@@ -68,12 +57,9 @@
   height: 1.25em;
   width: 1.35em;
   background: #37B24D;
-  /* background: url("data:image/svg+xml,%3Csvg width='40' height='37' viewBox='0 0 40 37' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20 0L39.0211 13.8197L31.7557 36.1803H8.2443L0.97887 13.8197L20 0Z' fill='%2337B24D'/%3E%3C/svg%3E%0A");
-  background-size: 1.25em, 1.35em; */
   background-repeat: no-repeat;
   top: 0;
   left: 0.02em;
-  /* z-index: -1; */
   mix-blend-mode: hard-light;
 }
 
@@ -83,7 +69,6 @@
   background: #37b24d;
   top: 0;
   left: 0.02em;
-  /* z-index: -1; */
   mix-blend-mode: hard-light;
   width: 0;
   height: 0;
@@ -95,7 +80,6 @@
 .background {
   position: absolute;
   inset: 0;
-  /* z-index: -1; */
   mix-blend-mode: hard-light; 
 }
 
