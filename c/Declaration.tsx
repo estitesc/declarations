@@ -14,11 +14,8 @@ const colorPalette = [
   '#529642',
   '#E67700',
   '#9180F4',
-  // '#826ED8',
   '#3F6695',
-  // '#FFFD54',
   '#EB53C7',
-  // '#CCC7DE',
   '#529642',
   '#C79A4B',
 ]
@@ -36,9 +33,6 @@ const Rect = (props) => {
       height={rand(100 + 20)}
       rx={rand(10)}
       filter={Math.random() < 0.8 ? 'url(#blur)' : undefined}
-      // filter='url(#blur)'
-      // opacity={`0.${rand(9)}${rand(10)}`}
-      // fill={colorPalette[rand(colorPalette.length)]}
       className={styles.backgroundRect}
       {...props}
     ></rect>
@@ -62,9 +56,9 @@ const getColorsFromAddress = (address) => {
   return chunkString(address.replace('0x', 'ff'), 6).map(hex => `#${hex}`)
 }
 
-export const Background = ({ seed, className, ...rest }) => {
-  // seedrandom(seed, { global: true });
-  const colors = getColorsFromAddress(address)
+export const Background = ({ seed, className, address, ...rest }) => {
+  seedrandom(seed, { global: true });
+  const colors = address ? getColorsFromAddress(address) : colorPalette
   const [isClient, setIsClient] = React.useState(false)
 
   React.useEffect(() => {

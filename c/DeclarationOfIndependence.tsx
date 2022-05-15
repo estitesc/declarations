@@ -1,6 +1,8 @@
 import React from 'react'
 import styles from '../styles/Home.module.css'
 
+/* eslint-disable react/no-unescaped-entities */
+
 const DeclarationOfIndependence: React.FC<> = () => {
   return (
     <section className={styles.declarationProse}>
@@ -191,8 +193,8 @@ const DeclarationOfIndependence: React.FC<> = () => {
         our sacred Honor.
       </p>
       <hr />
-      <div>
-        <div className='col-sm-3'>
+      <div style={{ columns: 3 }}>
+        <div style={{ breakInside: 'avoid' }}>
           <p>
             <strong>Georgia</strong>
           </p>
@@ -219,8 +221,7 @@ const DeclarationOfIndependence: React.FC<> = () => {
             <strong>Massachusetts</strong>
           </p>
           <p>John Hancock</p>
-        </div>
-        <div className='col-sm-3'>
+          <p>&nbsp;</p>
           <p>
             <strong>Maryland</strong>
           </p>
@@ -229,6 +230,8 @@ const DeclarationOfIndependence: React.FC<> = () => {
           <p>Thomas Stone</p>
           <p>Charles Carroll of Carrollton</p>
           <p>&nbsp;</p>
+        </div>
+        <div style={{ breakInside: 'avoid' }}>
           <p>
             <strong>Virginia</strong>
           </p>
@@ -252,8 +255,9 @@ const DeclarationOfIndependence: React.FC<> = () => {
           <p>George Taylor</p>
           <p>James Wilson</p>
           <p>George Ross</p>
+          <p>&nbsp;</p>
         </div>
-        <div className='col-sm-3'>
+        <div style={{ breakInside: 'avoid' }}>
           <p>
             <strong>Delaware</strong>
           </p>
@@ -269,6 +273,8 @@ const DeclarationOfIndependence: React.FC<> = () => {
           <p>Francis Lewis</p>
           <p>Lewis Morris</p>
           <p>&nbsp;</p>
+        </div>
+        <div style={{ breakInside: 'avoid' }}>
           <p>
             <strong>New Jersey</strong>
           </p>
@@ -284,8 +290,6 @@ const DeclarationOfIndependence: React.FC<> = () => {
           <p>Josiah Bartlett</p>
           <p>William Whipple</p>
           <p>&nbsp;</p>
-        </div>
-        <div className='col-sm-3'>
           <p>
             <strong>Massachusetts</strong>
           </p>

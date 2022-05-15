@@ -30,25 +30,23 @@
   --fluid-type-max: 3rem;
   --fluid-type-target: 5vw;
   font-family: 'Inter Display';
-  /* letter-spacing: -1px; */
   font-weight: 900;
+  margin-bottom: 2px;
+  color: rgba(0, 0, 0, 0.8);
 }
 
 .title > span {
-  /* color: #EB53C7; */
-  /* color: white; */
-  /* text-shadow: -1px 1px 0 rgba(0, 0, 0, 0.4),
-				  1px 1px 0 rgba(0, 0, 0, 0.4),
-				 1px -1px 0 rgba(0, 0, 0, 0.4),
-				-1px -1px 0 rgba(0, 0, 0, 0.4); */
+  font-family: Georgia, serif;
+  font-style: italic;
+  letter-spacing: -4px;
+  padding-right: 5.5px;
 }
 
 .subtitle {
   --fluid-type-min: 1rem;
   --fluid-type-max: 1.3rem;
   --fluid-type-target: 1.5vw;
-  margin-bottom: 1rem;
-  line-height: 1.3;
+  line-height: 1.4;
 }
 
 .byline {
@@ -82,26 +80,16 @@
 .oulipo {
   font-family: Menlo, monospace;
   font-size: 0.75em;
-  padding: 3rem 0;
+  padding: 2rem 0;
   opacity: 0.65;
-  text-decoration: underline;
-  text-decoration-style: dashed;
-  text-underline-offset: 1px;
-  text-decoration-color: red;
 }
 
 .background {
   position: relative !important;
-  /* top: 0;
-  left: 0;
-  z-index: -1; */
   aspect-ratio: 1 / 1;
   height: 180px;
-  /* width: 180px; */
   margin: 0.5rem 0 1rem;
-
   border: 4px solid black;
-  /* border-radius: 8px; */
   padding: 4px;
 }
 
@@ -111,7 +99,6 @@
   text-decoration: underline;
   text-decoration-style: dashed;
   text-underline-offset: 1px;
-  /* text-decoration-color: red; */
   color: inherit;
   font-weight: 600;
 }
@@ -140,4 +127,10 @@
 
 .declarationProse > * + * {
   margin-top: 1.25rem;
+}
+
+.declarationProse hr {
+  margin: 1.5rem 0;
+  border-width: 2px;
+  border-color: rgba(0, 0, 0, 0.08);
 }

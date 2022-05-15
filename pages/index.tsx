@@ -7,6 +7,8 @@ import Declaration, { Background } from '../c/Declaration'
 import DeclarationOfIndependence from '../c/DeclarationOfIndependence'
 import clsx from 'clsx'
 
+const MemoizedBackground = React.memo(Background)
+
 const Home: NextPage = () => {
   const [showDeclaration, setShowDeclaration] = React.useState(false)
   const toggle = () => setShowDeclaration(!showDeclaration)
@@ -14,7 +16,7 @@ const Home: NextPage = () => {
   return (
     <div className={styles.container}>
       <div>
-        <Background seed={Date.now()} className={styles.background} />
+        <MemoizedBackground className={styles.background} />
 
         <header className={styles.header}>
           <h1 className={styles.title + ' fluid-type'}>
@@ -23,10 +25,6 @@ const Home: NextPage = () => {
           <p className={styles.subtitle + ' fluid-type'}>
             A reclaiming of the Declaration of Independence by those who never
             signed it.
-          </p>
-
-          <p className={styles.byline}>
-            Halim Madi, Evan Stites-Clayton, and Chase McCoy
           </p>
         </header>
 
@@ -58,7 +56,17 @@ const Home: NextPage = () => {
           </p>
         </div>
 
-        <input type='test' placeholder='Search' className={styles.textInput} />
+        <form>
+          <label htmlFor='email'>Email</label>
+          <input
+            id='email'
+            type='email'
+            name='email'
+            placeholder='Enter your email address'
+            autoComplete='email'
+            className={styles.textInput}
+          />
+        </form>
 
         <div className={styles.intro}>
           <p>
@@ -77,7 +85,10 @@ const Home: NextPage = () => {
           </p>
         </div>
 
-        <div className={styles.oulipo}>0u1ip0</div>
+        <div className={styles.oulipo}>
+          xoxo,
+          <br /> — 0u1ip0
+        </div>
       </div>
 
       {showDeclaration && <DeclarationOfIndependence />}
