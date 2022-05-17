@@ -3,7 +3,7 @@ import styles from '../styles/Home.module.css'
 
 /* eslint-disable react/no-unescaped-entities */
 
-const DeclarationOfIndependence: React.FC<> = () => {
+const DeclarationOfIndependence: React.FC = () => {
   return (
     <section className={styles.declarationProse}>
       <p>

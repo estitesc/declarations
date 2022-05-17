@@ -10,7 +10,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.page}>
-      <Declaration size={size}>{text}</Declaration>
+      <Declaration size={size.toString()}>{text?.toString()}</Declaration>
     </div>
   )
 }

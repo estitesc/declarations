@@ -20,11 +20,15 @@ const colorPalette = [
   '#C79A4B',
 ]
 
-const rand = (max) => {
+const rand = (max: any) => {
   return Math.floor(Math.random() * max)
 }
 
-const Rect = (props) => {
+type RectProps = {
+  fill: string
+}
+
+const Rect: React.FC<RectProps> = ({ fill, ...props }) => {
   return (
     <rect
       x={rand(120 + 20)}
@@ -34,30 +38,42 @@ const Rect = (props) => {
       rx={rand(10)}
       filter={Math.random() < 0.8 ? 'url(#blur)' : undefined}
       className={styles.backgroundRect}
+      fill={fill}
       {...props}
     ></rect>
   )
 }
 
-const chunkString = (str, len) => {
-  const size = Math.ceil(str.length/len)
+const chunkString = (str: string, len: number) => {
+  const size = Math.ceil(str.length / len)
   const r = Array(size)
   let offset = 0
-  
+
   for (let i = 0; i < size; i++) {
     r[i] = str.substr(offset, len)
     offset += len
   }
-  
+
   return r
 }
 
-const getColorsFromAddress = (address) => {
-  return chunkString(address.replace('0x', 'ff'), 6).map(hex => `#${hex}`)
+const getColorsFromAddress = (address: string) => {
+  return chunkString(address.replace('0x', 'ff'), 6).map((hex) => `#${hex}`)
 }
 
-export const Background = ({ seed, className, address, ...rest }) => {
-  seedrandom(seed, { global: true });
+type BackgroundProps = {
+  seed?: string
+  className?: string
+  address?: string
+}
+
+export const Background: React.FC<BackgroundProps> = ({
+  seed,
+  className,
+  address,
+  ...rest
+}) => {
+  seedrandom(seed, { global: true })
   const colors = address ? getColorsFromAddress(address) : colorPalette
   const [isClient, setIsClient] = React.useState(false)
 
@@ -103,7 +119,7 @@ export const Background = ({ seed, className, address, ...rest }) => {
 }
 
 interface DeclarationProps {
-  children: React.Node
+  children?: string
   size?: string
 }
 
@@ -126,7 +142,7 @@ const Declaration: React.FC<DeclarationProps> = ({
         </Textfit>
       </div>
 
-      <Background seed={children} />
+      <Background seed={children.toString()} />
     </div>
   )
 }
