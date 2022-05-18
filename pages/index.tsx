@@ -2,6 +2,7 @@ import React from 'react'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import styles from '../styles/Home.module.css'
 import Declaration, { Background } from '../c/Declaration'
 import DeclarationOfIndependence from '../c/DeclarationOfIndependence'
@@ -10,13 +11,19 @@ import clsx from 'clsx'
 const MemoizedBackground = React.memo(Background)
 
 const Home: NextPage = () => {
+  const router = useRouter()
   const [showDeclaration, setShowDeclaration] = React.useState(false)
-  const toggle = () => setShowDeclaration(!showDeclaration)
+  const toggle = () => {
+    router.push('#declaration-of-independence')
+    setShowDeclaration(!showDeclaration)
+  }
 
   return (
     <div className={styles.container}>
       <div>
-        <MemoizedBackground className={styles.background} />
+        <div style={{ position: 'sticky' }}>
+          <MemoizedBackground className={styles.background} />
+        </div>
 
         <header className={styles.header}>
           <h1 className={styles.title + ' fluid-type'}>

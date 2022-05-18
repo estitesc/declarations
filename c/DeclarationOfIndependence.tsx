@@ -5,7 +5,7 @@ import styles from '../styles/Home.module.css'
 
 const DeclarationOfIndependence: React.FC = () => {
   return (
-    <section className={styles.declarationProse}>
+    <div id='declaration-of-independence' className={styles.declarationProse}>
       <p>
         <strong>In Congress, July 4, 1776</strong>
       </p>
@@ -318,7 +318,7 @@ const DeclarationOfIndependence: React.FC = () => {
           <p>Matthew Thornton</p>
         </div>
       </div>
-    </section>
+    </div>
   )
 }
 
