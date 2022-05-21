@@ -7,47 +7,43 @@
   gap: 2rem;
   width: 100vw;
   overflow-x: hidden;
+  --padding: 2rem;
 }
 
 .container > div:first-child {
-  padding: 2rem;
+  padding: var(--padding);
   max-width: 58ch;
   flex: 1 1 auto;
   top: 0;
+}
+
+.container > .declarationProse {
+  border-left: 4px solid #eee;
+  padding: var(--padding);
+  flex: 1 1 auto;
+  max-width: 100%;
 }
 
 @media (max-width: 1000px) {
   .container {
     flex-direction: column;
     align-items: center;
+    --padding: 1rem;
   }
-}
 
-.container > .declarationProse {
-  border-left: 4px solid #eee;
-  padding: 2rem;
-  flex: 1 1 auto;
+  .container > .declarationProse {
+    border-left: none;
+  }
 }
 
 .header {
   margin-bottom: 1rem;
 }
 
-.title {
-  --fluid-type-min: 2.5rem;
-  --fluid-type-max: 3rem;
-  --fluid-type-target: 5vw;
-  font-family: 'Inter Display';
-  font-weight: 900;
-  margin-bottom: 2px;
-  color: rgba(0, 0, 0, 0.8);
-}
-
-.title > span {
-  font-family: Georgia, serif;
-  font-style: italic;
-  letter-spacing: -4px;
-  padding-right: 5.5px;
+.logo {
+  max-width: 22rem;
+  margin-top: 2rem;
+  margin-bottom: 12px;
 }
 
 .subtitle {
@@ -59,6 +55,11 @@
 
 .byline {
   color: gray;
+}
+
+.intro {
+  text-align: justify;
+  hyphens: auto;
 }
 
 .intro > p:not(:first-child) {
@@ -88,7 +89,7 @@
 .oulipo {
   font-family: Menlo, monospace;
   font-size: 0.75em;
-  padding: 2rem 0;
+  padding: 1rem 0;
   opacity: 0.65;
 }
 
@@ -118,19 +119,22 @@
 .textInput {
   all: unset;
   padding: 8px 12px;
-  border: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
   margin: 1.5rem 0;
-  border-radius: 4px;
   width: 100%;
   box-sizing: border-box;
+  transition: all .2s;
 }
 
 .textInput:focus {
+  box-shadow: 0 2px 0 0 red;
   border-color: red;
 }
 
 .declarationProse > * {
-  max-width: 64ch;
+  max-width: 58ch;
+  text-align: justify;
+  hyphens: auto;
 }
 
 .declarationProse > * + * {

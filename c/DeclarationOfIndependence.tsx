@@ -6,10 +6,10 @@ import styles from '../styles/Home.module.css'
 const DeclarationOfIndependence: React.FC = () => {
   return (
     <div id='declaration-of-independence' className={styles.declarationProse}>
-      <p>
+      <h3>
         <strong>In Congress, July 4, 1776</strong>
-      </p>
-      <p>
+      </h3>
+      <p className={styles.dropCap}>
         <strong>
           The unanimous Declaration of the thirteen united States of America,
         </strong>{' '}

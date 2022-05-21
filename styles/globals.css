@@ -1,26 +1,5 @@
 @import url('https://rsms.me/inter/inter.css');
 
-@font-face {
-  font-family: 'Inter Display';
-  font-style: normal;
-  font-weight: 900;
-  font-display: swap;
-  src: url('/fonts/inter-display/InterDisplay-Black.woff2?v=3.12')
-      format('woff2'),
-    url('/fonts/inter-display/InterDisplay-Black.woff?v=3.12') format('woff');
-}
-
-@font-face {
-  font-family: 'Inter Display';
-  font-style: italic;
-  font-weight: 900;
-  font-display: swap;
-  src: url('/fonts/inter-display/InterDisplay-BlackItalic.woff2?v=3.12')
-      format('woff2'),
-    url('/fonts/inter-display/InterDisplay-BlackItalic.woff?v=3.12')
-      format('woff');
-}
-
 :root {
   --system-fonts: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',

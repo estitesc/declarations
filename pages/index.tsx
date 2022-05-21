@@ -7,6 +7,7 @@ import styles from '../styles/Home.module.css'
 import Declaration, { Background } from '../c/Declaration'
 import DeclarationOfIndependence from '../c/DeclarationOfIndependence'
 import clsx from 'clsx'
+import { Logo } from '../c/Logo'
 
 const MemoizedBackground = React.memo(Background)
 
@@ -22,13 +23,17 @@ const Home: NextPage = () => {
     <div className={styles.container}>
       <div>
         <div style={{ position: 'sticky' }}>
-          <MemoizedBackground className={styles.background} />
+          <MemoizedBackground
+            address='0x0614c8D023e530AE260b3dFE5CD15BD2897D944d'
+            className={styles.background}
+          />
         </div>
 
         <header className={styles.header}>
-          <h1 className={styles.title + ' fluid-type'}>
-            <span>Re</span>declarations
-          </h1>
+          {/* <h1 className={styles.title + ' fluid-type'}>
+            <span>█▓▒░</span>Redeclarations
+          </h1> */}
+          <Logo />
           <p className={styles.subtitle + ' fluid-type'}>
             A reclaiming of the Declaration of Independence by those who never
             signed it.
@@ -36,7 +41,7 @@ const Home: NextPage = () => {
         </header>
 
         <div className={styles.intro}>
-          <p className={styles.dropCap}>
+          <p>
             The{' '}
             <button
               onClick={toggle}
@@ -48,8 +53,8 @@ const Home: NextPage = () => {
               Declaration of Independence
             </button>{' '}
             marked America’s exit from the British Empire. Redeclarations are an
-            invitation to depart again, break from today’s America and embrace a
-            redefined nation. By minting bits of the old declaration, we’re
+            invitation to depart again, break from today’s America, and embrace
+            a redefined nation. By minting bits of the old declaration, we’re
             taking ownership of this nation’s founding document and redeclaring
             this country.
           </p>
@@ -61,26 +66,12 @@ const Home: NextPage = () => {
             Redeclarations resets and corrects the beginnings of this country by
             giving all of its parts a voice.
           </p>
-        </div>
 
-        <form>
-          <label htmlFor='email'>Email</label>
-          <input
-            id='email'
-            type='email'
-            name='email'
-            placeholder='Enter your email address'
-            autoComplete='email'
-            className={styles.textInput}
-          />
-        </form>
-
-        <div className={styles.intro}>
           <p>
             The new signatories will be able to select the words and sentences
             of the Declaration that speak to them. Their selections will be a
             collective erasure of the past, a revealing of new potential
-            meanings within the original document and a seeding of kernels of
+            meanings within the original document, and a seeding of kernels of
             unexplored futures.
           </p>
 
@@ -91,6 +82,18 @@ const Home: NextPage = () => {
             colorscape.
           </p>
         </div>
+
+        <form>
+          <input
+            id='email'
+            type='email'
+            name='email'
+            placeholder='Enter your email address'
+            autoComplete='email'
+            className={styles.textInput}
+            aria-label='Email'
+          />
+        </form>
 
         <div className={styles.oulipo}>
           xoxo,
