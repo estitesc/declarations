@@ -57,17 +57,11 @@
   color: gray;
 }
 
-.intro {
-  text-align: justify;
-  hyphens: auto;
-}
-
 .intro > p:not(:first-child) {
   text-indent: 3ch;
 }
 
 .dropCap:first-letter {
-  /* color: #F08C00; */
   float: left;
   font-family: Georgia;
   font-size: 3.4em;
@@ -133,8 +127,6 @@
 
 .declarationProse > * {
   max-width: 58ch;
-  text-align: justify;
-  hyphens: auto;
 }
 
 .declarationProse > * + * {
