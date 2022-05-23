@@ -16,7 +16,7 @@ export default function Document() {
         <link rel="icon" href="/favicon.ico" />
         <meta
           property='og:image'
-          content='https://redeclarations.com/social.png?v=1.0'
+          content='https://redeclarations.com/social.png?v=2.0'
         />
         <meta property='og:image:width' content='1200' />
         <meta property='og:image:height' content='630' />
@@ -30,7 +30,7 @@ export default function Document() {
         />
         <meta
           name='twitter:image'
-          content='https://redeclarations.com/social.png?v=1.0'
+          content='https://redeclarations.com/social.png?v=2.0'
         />
       </Head>
       <body>
