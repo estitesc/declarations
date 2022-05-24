@@ -23,9 +23,9 @@ const DeclarationOfIndependence: React.FC = () => {
       <p>
         We hold these truths to be self-evident, that all men are created equal,
         that they are endowed by their Creator with certain unalienable Rights,
-        that among these are Life, Liberty and the pursuit of Happiness.--That
+        that among these are Life, Liberty and the pursuit of Happiness.—That
         to secure these rights, Governments are instituted among Men, deriving
-        their just powers from the consent of the governed, --That whenever any
+        their just powers from the consent of the governed, —That whenever any
         Form of Government becomes destructive of these ends, it is the Right of
         the People to alter or to abolish it, and to institute new Government,
         laying its foundation on such principles and organizing its powers in
@@ -38,7 +38,7 @@ const DeclarationOfIndependence: React.FC = () => {
         of abuses and usurpations, pursuing invariably the same Object evinces a
         design to reduce them under absolute Despotism, it is their right, it is
         their duty, to throw off such Government, and to provide new Guards for
-        their future security.--Such has been the patient sufferance of these
+        their future security.—Such has been the patient sufferance of these
         Colonies; and such is now the necessity which constrains them to alter
         their former Systems of Government. The history of the present King of
         Great Britain is a history of repeated injuries and usurpations, all
