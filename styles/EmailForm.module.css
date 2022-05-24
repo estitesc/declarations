@@ -1,0 +1,31 @@
+.textInput {
+  all: unset;
+  padding: 8px 12px;
+  border-bottom: 1px solid #ccc;
+  margin: 1.5rem 0;
+  width: 100%;
+  box-sizing: border-box;
+  transition: all 0.2s;
+}
+
+.textInput:focus {
+  box-shadow: 0 2px 0 0 tomato;
+  border-color: tomato;
+}
+
+.inputAndButton {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.submitButton {
+  height: 40px;
+  padding: 0 12px;
+}
+
+.statusLabel {
+  font-style: italic;
+  font-size: 14px;
+  margin-top: -12px;
+}

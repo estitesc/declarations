@@ -1,30 +1,37 @@
-import React from 'react'
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import { useRouter } from 'next/router'
-import styles from '../styles/Home.module.css'
-import Declaration, { Background } from '../c/Declaration'
-import DeclarationOfIndependence from '../c/DeclarationOfIndependence'
-import clsx from 'clsx'
-import { Logo } from '../c/Logo'
+import React from "react";
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import styles from "../styles/Home.module.css";
+import Declaration, { Background } from "../c/Declaration";
+import DeclarationOfIndependence from "../c/DeclarationOfIndependence";
+import clsx from "clsx";
+import { Logo } from "../c/Logo";
+import Mailchimp from "../c/mailchimp";
+import EmailForm from "../c/EmailForm";
 
-const MemoizedBackground = React.memo(Background)
+const MemoizedBackground = React.memo(Background);
 
 const Home: NextPage = () => {
-  const router = useRouter()
-  const [showDeclaration, setShowDeclaration] = React.useState(false)
+  const router = useRouter();
+  const [showDeclaration, setShowDeclaration] = React.useState(false);
   const toggle = () => {
-    router.push('#declaration-of-independence')
-    setShowDeclaration(!showDeclaration)
-  }
+    router.push("#declaration-of-independence");
+    setShowDeclaration(!showDeclaration);
+  };
+
+  const [emailSuccess, setEmailSuccess] = React.useState(false);
+  const onSuccess = React.useCallback(() => {
+    setEmailSuccess(true);
+  }, []);
 
   return (
     <div className={styles.container}>
       <div>
-        <div style={{ position: 'sticky' }}>
+        <div style={{ position: "sticky" }}>
           <MemoizedBackground
-            address='0x0614c8D023e530AE260b3dFE5CD15BD2897D944d'
+            address="0x0614c8D023e530AE260b3dFE5CD15BD2897D944d"
             className={styles.background}
           />
         </div>
@@ -34,7 +41,7 @@ const Home: NextPage = () => {
             <span>█▓▒░</span>Redeclarations
           </h1> */}
           <Logo />
-          <p className={styles.subtitle + ' fluid-type'}>
+          <p className={styles.subtitle + " fluid-type"}>
             A reclaiming of the Declaration of Independence by those who never
             signed it.
           </p>
@@ -42,7 +49,7 @@ const Home: NextPage = () => {
 
         <div className={styles.intro}>
           <p>
-            The{' '}
+            The{" "}
             <button
               onClick={toggle}
               className={clsx(
@@ -51,7 +58,7 @@ const Home: NextPage = () => {
               )}
             >
               Declaration of Independence
-            </button>{' '}
+            </button>{" "}
             marked America’s exit from the British Empire. Redeclarations are an
             invitation to depart again, break from today’s America, and embrace
             a redefined nation. By minting bits of the old declaration, we’re
@@ -83,17 +90,10 @@ const Home: NextPage = () => {
           </p>
         </div>
 
-        <form>
-          <input
-            id='email'
-            type='email'
-            name='email'
-            placeholder='Enter your email address'
-            autoComplete='email'
-            className={styles.textInput}
-            aria-label='Email'
-          />
-        </form>
+        <EmailForm
+          actionUrl="https://gmail.us9.list-manage.com/subscribe/post?u=5c6722630f29edfbab3f9a71b&amp;id=fcf5cacf14"
+          onSuccess={() => {}}
+        />
 
         <div className={styles.oulipo}>
           xoxo,
@@ -128,7 +128,7 @@ const Home: NextPage = () => {
         </Declaration>
       </div> */}
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
