@@ -1,8 +1,14 @@
+.wrapper {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .textInput {
   all: unset;
   padding: 8px 12px;
   border-bottom: 1px solid #ccc;
-  margin: 1.5rem 0;
   width: 100%;
   box-sizing: border-box;
   transition: all 0.2s;
@@ -16,16 +22,32 @@
 .inputAndButton {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-end;
+  gap: 12px;
 }
 
 .submitButton {
-  height: 40px;
-  padding: 0 12px;
+  all: unset;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 6px 8px;
+  margin: -8px;
+  border-radius: 8px;
+  transition: all 0.2s;
+}
+
+.submitButton:hover {
+  background: #eee;
+}
+
+.submitButton[disabled] {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 .statusLabel {
   font-style: italic;
-  font-size: 14px;
-  margin-top: -12px;
+  color: gray;
+  font-size: 0.8rem;
+  padding-left: 12px;
 }
