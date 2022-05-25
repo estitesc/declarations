@@ -36,7 +36,7 @@
   transition: all 0.2s;
 }
 
-.submitButton:hover {
+.submitButton:hover, .submitButton:focus {
   background: #eee;
 }
 
