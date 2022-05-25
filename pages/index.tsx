@@ -8,7 +8,6 @@ import Declaration, { Background } from "../c/Declaration";
 import DeclarationOfIndependence from "../c/DeclarationOfIndependence";
 import clsx from "clsx";
 import { Logo } from "../c/Logo";
-import Mailchimp from "../c/mailchimp";
 import EmailForm from "../c/EmailForm";
 
 const MemoizedBackground = React.memo(Background);
