@@ -27,11 +27,14 @@ contract Sonnet {
     function addLine(string memory _content) public {
         // Require a valid name
         require(bytes(_content).length > 0);
-        // Increment product count
-        lineCount ++;
-        // Create the product
+        
+        // Create the line
         lines[lineCount] = Line(lineCount, _content, payable(msg.sender), block.timestamp);
+
         // Trigger an event
         emit LineAdded(lineCount, _content, payable(msg.sender), block.timestamp);
+
+        // Increment line count
+        lineCount ++;
     }
 }
