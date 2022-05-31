@@ -55,8 +55,6 @@ contract("DeclTest0", ([deployer, minter]) => {
         indexSet[0].toNumber(),
         indexSet[1].toNumber(),
       ]);
-      console.log("converted are", convertedIndices);
-      console.log("og are", exampleIndices);
 
       assert.deepEqual(
         convertedIndices,
@@ -65,9 +63,9 @@ contract("DeclTest0", ([deployer, minter]) => {
       );
 
       assert.equal(
-        customEvent.tokenUri,
+        customEvent.tokenURI,
         "https://sonn3t.com/disclaimed_witch.png",
-        "indicies are correct"
+        "token URI is are correct"
       );
     });
   });
