@@ -7,6 +7,12 @@ require("chai").use(require("chai-as-promised")).should();
 contract("DeclTest0", ([deployer, minter]) => {
   let declTest;
 
+  const exampleIndices = [
+    [10, 15],
+    [20, 25],
+    [30, 34],
+  ];
+
   before(async () => {
     declTest = await DeclTest0.deployed();
   });
@@ -27,17 +33,13 @@ contract("DeclTest0", ([deployer, minter]) => {
     before(async () => {
       result = await declTest.mint(
         "https://sonn3t.com/disclaimed_witch.png",
-        [
-          [10, 15],
-          [20, 25],
-          [30, 34],
-        ],
+        exampleIndices,
         { from: minter }
       );
       publicMintCount = await declTest.publicMintCount();
     });
 
-    it("adds lines", async () => {
+    it("mints a declaration", async () => {
       // SUCCESS
       assert.equal(publicMintCount, 1);
       const mintEvent = result.logs[0].args;
@@ -48,6 +50,25 @@ contract("DeclTest0", ([deployer, minter]) => {
         "id is correct"
       );
       assert.equal(customEvent.minter, minter, "owner is correct");
+
+      const convertedIndices = customEvent.indices.map((indexSet) => [
+        indexSet[0].toNumber(),
+        indexSet[1].toNumber(),
+      ]);
+      console.log("converted are", convertedIndices);
+      console.log("og are", exampleIndices);
+
+      assert.deepEqual(
+        convertedIndices,
+        exampleIndices,
+        "indicies are correct"
+      );
+
+      assert.equal(
+        customEvent.tokenUri,
+        "https://sonn3t.com/disclaimed_witch.png",
+        "indicies are correct"
+      );
     });
   });
 

@@ -3,11 +3,17 @@ pragma solidity ^0.8.0;
 pragma experimental ABIEncoderV2;
 
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import { ERC721URIStorage } from "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { ReentrancyGuard } from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract DeclTest0 is ERC721, ReentrancyGuard, Ownable {
+contract DeclTest0 is ERC721URIStorage, ReentrancyGuard, Ownable {
     mapping(uint => Declaration) public declarations;
+
+    uint256 PUBLIC_SUPPLY = 9500;
+    uint256 OWNER_SUPPLY = 500;
+    uint256 public publicMintCount = 0;
+    uint256 ownerMintCount = 0;
 
     struct Declaration {
         uint id;
@@ -16,13 +22,10 @@ contract DeclTest0 is ERC721, ReentrancyGuard, Ownable {
         string tokenURI;
     }
 
-    uint256 PUBLIC_SUPPLY = 9500;
-    uint256 OWNER_SUPPLY = 500;
-    uint256 public publicMintCount = 0;
-    uint256 ownerMintCount = 0;
-
     event DeclMinted(
         uint id,
+        string tokenUri,
+        uint[][] indices,
         address payable minter,
         uint addedAt
     );
@@ -51,10 +54,17 @@ contract DeclTest0 is ERC721, ReentrancyGuard, Ownable {
         require(validIndices, 'This declaration has already been minted.');
 
         _safeMint(_msgSender(), publicMintCount);
+        _setTokenURI(publicMintCount, _tokenUri);
         declarations[publicMintCount] = Declaration(publicMintCount, block.timestamp, indices, _tokenUri);
 
         // Trigger an event
-        emit DeclMinted(publicMintCount, payable(msg.sender), block.timestamp);
+        emit DeclMinted(
+            publicMintCount,
+            _tokenUri,
+            indices,
+            payable(msg.sender),
+            block.timestamp
+        );
 
         publicMintCount += 1;
     }
@@ -65,5 +75,5 @@ contract DeclTest0 is ERC721, ReentrancyGuard, Ownable {
         ownerMintCount += 1;
     }
 
-    constructor() ERC721("DummyToken", "DCLR") Ownable() {}
+    constructor() ERC721("Redeclarations", "REDCL") Ownable() {}
 }
