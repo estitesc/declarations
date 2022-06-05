@@ -134,7 +134,7 @@ const Declaration: React.FC<DeclarationProps> = ({
       </Textfit>
 
       <div style={{ paddingRight: '20%' }}>
-        <Textfit mode='single' max={50}>
+        <Textfit mode='single' max={48}>
           <div className={styles.byline}>
             <div className={styles.title}>redeclarations #21</div>
             <div className={styles.indices}>[23:47] [145:198] [341:482]</div>
