@@ -6,7 +6,7 @@ import Declaration from '../c/Declaration'
 
 const Home: NextPage = () => {
   const {query} = useRouter()
-  const {text, size = '75vh'} = query
+  const {text, size = '1600px'} = query
 
   return (
     <div className={styles.page}>
