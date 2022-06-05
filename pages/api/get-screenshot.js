@@ -1,17 +1,10 @@
-import puppeteer from '../../utils/puppeteer'
-import chrome from 'chrome-aws-lambda'
+import puppeteer from 'puppeteer'
 
 const getScreenshot = async (req, res) => {
   try {
-    const browser = await puppeteer.launch(
-      process.env.NODE_ENV === 'production'
-        ? {
-            args: chrome.args,
-            executablePath: await chrome.executablePath,
-            headless: chrome.headless,
-          }
-        : {}
-    )
+    const browser = await puppeteer.launch({
+      args: ['--no-sandbox'],
+    })
 
     const page = await browser.newPage()
 
