@@ -1,16 +1,20 @@
-import puppeteer from 'puppeteer'
+import chromium from 'chrome-aws-lambda'
+import playwright from 'playwright-core'
 
 const getScreenshot = async (req, res) => {
   try {
-    const browser = await puppeteer.launch({
-      args: ['--no-sandbox'],
+    const browser = await playwright.chromium.launch({
+      args: chromium.args,
+      executablePath:
+        process.env.NODE_ENV === 'production'
+          ? await chromium.executablePath
+          : '/usr/local/bin/chromium',
+      headless:
+        process.env.NODE_ENV === 'production' ? chromium.headless : true,
     })
 
-    const page = await browser.newPage()
-
-    page.setUserAgent(
-      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:86.0) Gecko/20100101 Firefox/86.0'
-    )
+    const context = await browser.newContext()
+    const page = await context.newPage()
 
     await page.setViewport({
       width: 1600,
