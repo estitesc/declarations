@@ -64,7 +64,7 @@ contract DeclTest1 is ERC721URIStorage, ReentrancyGuard, Ownable {
         }
         require(validIndices, 'This declaration has already been minted.');
 
-        string memory tokenURIJson = Base64.encode(bytes(string(abi.encodePacked('{"name": "Redeclaration #', toString(publicMintCount), '", "description": "A reclaiming of the Declaration of Independence by those who never signed it.", "image": "', _imageUrl, '"selection": "', indicesString, '"}'))));
+        string memory tokenURIJson = Base64.encode(bytes(string(abi.encodePacked('{"name": "Redeclaration #', toString(publicMintCount), '", "description": "A reclaiming of the Declaration of Independence by those who never signed it.", "image": "', _imageUrl, '", "selection": "', indicesString, '"}'))));
         string memory tokenURIString = string(abi.encodePacked('data:application/json;base64,', tokenURIJson));
 
         _safeMint(_msgSender(), publicMintCount);
