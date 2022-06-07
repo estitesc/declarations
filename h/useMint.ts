@@ -10,7 +10,7 @@ const useMint = () => {
     async (tokenUri: string, indices: number[][]) => {
       const { provider, networkId } = await setupNetwork();
 
-      console.log("network Id is", networkId);
+      // @ts-ignore
       const networkData = DeclTest1.networks[networkId];
       if (networkData) {
         const contract = new ethers.Contract(
