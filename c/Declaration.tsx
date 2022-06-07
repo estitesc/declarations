@@ -128,7 +128,7 @@ const Declaration: React.FC<DeclarationProps> = ({
   size,
 }) => {
   return (
-    <div className={styles.canvas} style={{ height: size }}>
+    <div className={styles.canvas} style={{ height: size, width: size }}>
       <Textfit mode='multi' className={styles.text + ' ' + styles.dropCap}>
         {children}
       </Textfit>
