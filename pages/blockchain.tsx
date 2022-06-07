@@ -1,10 +1,6 @@
 import React from "react";
 import type { NextPage } from "next";
 import styles from "../styles/Declaration.module.css";
-import { useRouter } from "next/router";
-import Declaration from "../c/Declaration";
-import { ethers } from "ethers";
-import Sonnet from "../abis/Sonnet.json";
 import useNetworkDetails from "../h/useNetworkDetails";
 import useMint from "../h/useMint";
 
@@ -15,50 +11,69 @@ declare global {
 }
 
 const Blockchain: NextPage = () => {
-  // const [account, setAccount] = React.useState("");
-  // const [network, setNetwork] = React.useState(1);
-  // const [provider, setProvider] = React.useState(undefined as any);
+  const [account, setAccount] = React.useState("");
+  const [network, setNetwork] = React.useState(1);
+  const [provider, setProvider] = React.useState(undefined as any);
+  const [imageUrl, setImageUrl] = React.useState("");
+  const [indices, setIndices] = React.useState("[[0, 1],[2, 3]]");
 
-  const { query } = useRouter();
-  const { text, size = "75vh" } = query;
-
-  // useNetworkDetails(setProvider, setNetwork, setAccount);
+  useNetworkDetails(setProvider, setNetwork, setAccount);
   const { mint } = useMint();
 
-  // const useContract = React.useCallback(() => {
-  //   console.log("network is", network);
-  //   const networkData = Sonnet.networks[network];
-  //   console.log("network data is", networkData);
-  //   if (networkData) {
-  //     const contract = new ethers.Contract(
-  //       networkData.address,
-  //       Sonnet.abi,
-  //       provider
-  //     );
-  //     (async () => {
-  //       const name = await contract.name();
-  //       console.log("contract name", name);
-  //     })();
-  //   } else {
-  //     console.log("Sonnet not deployed to the network in question");
-  //   }
-  // }, [network, provider]);
+  const submitMint = React.useCallback(() => {
+    try {
+      const parsedIndices = JSON.parse(indices);
+      console.log("parsed is", parsedIndices);
+
+      let validIndices = true;
+      parsedIndices.forEach((indexPair: number[]) => {
+        if (indexPair.length != 2) {
+          console.log("Invalid array format");
+          validIndices = false;
+        }
+        if (typeof indexPair[0] != "number") {
+          console.log("Invalid index contents");
+          validIndices = false;
+        }
+        if (typeof indexPair[1] != "number") {
+          console.log("Invalid index contents");
+          validIndices = false;
+        }
+      });
+
+      if (!validIndices) {
+        return;
+      }
+
+      if (!imageUrl) {
+        console.log("must supply image url");
+        return;
+      }
+
+      console.log("got through", imageUrl, parsedIndices);
+      mint(imageUrl, parsedIndices);
+    } catch (e) {
+      console.log("error parsing indices into proper JSON", e);
+    }
+  }, [imageUrl, indices, mint]);
 
   return (
     <div className={styles.page}>
-      {/* <span>{account}</span> */}
-      <button
-        onClick={() =>
-          mint("https://sonn3t.com/disclaimed_witch.png", [
-            [10, 15],
-            [20, 25],
-            [30, 34],
-          ])
-        }
-      >
-        hello do it
-      </button>
-      <Declaration size={size.toString()}>{text?.toString()}</Declaration>
+      <div>account: {account}</div>
+      <div>
+        <div>
+          Image URL:
+          <input
+            value={imageUrl}
+            onChange={(e) => setImageUrl(e.target.value)}
+          />
+        </div>
+        <div>
+          Selection Indices:
+          <input value={indices} onChange={(e) => setIndices(e.target.value)} />
+        </div>
+      </div>
+      <button onClick={submitMint}>mint one</button>
     </div>
   );
 };
