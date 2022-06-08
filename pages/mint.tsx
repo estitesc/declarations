@@ -3,7 +3,6 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Mint.module.css'
-import { Background } from '../c/Declaration'
 import DeclarationOfIndependence from '../c/DeclarationOfIndependence'
 import clsx from 'clsx'
 import { Logo } from '../c/Logo'
@@ -11,23 +10,15 @@ import EmailForm from '../c/EmailForm'
 import TextSelector from '../c/TextSelector'
 import { declarationText } from '../utils/declarationText'
 
-const MemoizedBackground = React.memo(Background)
-
 const Mint: NextPage = () => {
   const [selection, setSelection] = React.useState(null)
+  const [textSelKey, setTextSelKey] = React.useState(0)
 
   console.log(selection)
 
   return (
     <div className={styles.container}>
       <div>
-        <div style={{ position: 'sticky' }}>
-          <MemoizedBackground
-            address='0x0614c8D023e530AE260b3dFE5CD15BD2897D944d'
-            className={styles.background}
-          />
-        </div>
-
         <header className={styles.header}>
           {/* <h1 className={styles.title + ' fluid-type'}>
             <span>█▓▒░</span>Redeclarations
@@ -39,7 +30,18 @@ const Mint: NextPage = () => {
           </p>
         </header>
 
+        <button
+          onClick={() => {
+            setSelection(null)
+            setTextSelKey(textSelKey + 1)
+          }}
+          disabled={selection === null || selection === ''}
+        >
+          Reset
+        </button>
+
         <TextSelector
+          key={textSelKey}
           text={declarationText}
           onChange={(selection) => setSelection(selection)}
         />

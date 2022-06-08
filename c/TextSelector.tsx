@@ -19,18 +19,23 @@ const SEL_COLORS = [
 ]
 const MAX_WORDS = 48
 
-const getSelectionText = (selections, words) => {
-  const text = ''
-  selections.forEach((selection) => {
-    if (selection[0] !== -1 && selection[1] !== -1) {
-      console.log(selection[0], selection[1])
-      text += words.slice(selection[0], selection[1] + 1).join(' ') + ' '
-    }
-  })
-  return text === '' ? 'Nothing selected' : text
-}
+// const getSelectionText = (selections, words) => {
+//   const text = ''
+//   selections.forEach((selection) => {
+//     if (selection[0] !== -1 && selection[1] !== -1) {
+//       text += words.slice(selection[0], selection[1] + 1).join(' ') + ' '
+//     }
+//   })
+//   return text === '' ? 'Nothing selected' : text
+// }
 
-const TextSelector = ({ text = blurb, onChange }) => {
+const TextSelector = ({
+  text = blurb,
+  onChange,
+}: {
+  text: string
+  onChange: (data: any) => void
+}) => {
   const initSelections = Array(MAX_SELECTIONS).fill([-1, -1])
   const [selections, setSelections] = React.useState(initSelections)
   const [selIndex, setSelIndex] = React.useState(0)
@@ -38,6 +43,28 @@ const TextSelector = ({ text = blurb, onChange }) => {
   const [selectionState, setSelectionState] = React.useState('nothing_selected')
   const [selection, setSelection] = React.useState([-1, -1])
   const words = _.split(text.trim(), ' ')
+
+  const renderConcat = () => {
+    let concat = ''
+
+    //sort them.
+    const sortedSelections = _.sortBy(
+      [...selections],
+      (selection: any) => selection[0]
+    )
+
+    sortedSelections.forEach((selection: any) => {
+      if (selection[0] >= 0) {
+        const wordsFromSel = words.slice(selection[0], selection[1] + 1)
+        concat += wordsFromSel.join(' ')
+        concat += ' '
+      }
+    })
+
+    return concat
+  }
+
+  const renderedText = renderConcat()
 
   const onClickSpace = (index: number) => {
     // if (isInSelectionInner(index)) {
@@ -83,13 +110,8 @@ const TextSelector = ({ text = blurb, onChange }) => {
       let newSelections = [...selections]
       newSelections[selIndexTarget] = selection
       setSelections(newSelections)
-      onChange &&
-        onChange({
-          indices: selections,
-          text: getSelectionText(selections, words),
-        })
     },
-    [selections, onChange, words]
+    [selections]
   )
 
   const cancelSelection = React.useCallback(
@@ -180,9 +202,17 @@ const TextSelector = ({ text = blurb, onChange }) => {
           }
           assignSelection(selIndex, [wordIndex, selections[selIndex][0]])
         }
+
         setSelectionState('nothing_selected')
         const newSelIndex = (selIndex + 1) % MAX_SELECTIONS
         setSelIndex(newSelIndex)
+
+        if (onChange) {
+          onChange({
+            indices: selections,
+            text: renderedText,
+          })
+        }
       }
     },
     [
@@ -194,11 +224,17 @@ const TextSelector = ({ text = blurb, onChange }) => {
       selIndex,
       selectionState,
       selections,
+      onChange,
+      renderedText,
     ]
   )
 
   const renderWords = React.useCallback(() => {
+    // const remainder = MAX_WORDS - getWordsSelectedCount()
+
     return words.map((word: string, index: number) => {
+      // const outOfBounds = false
+
       return (
         <React.Fragment key={index}>
           {word.includes('\n') ? (
@@ -237,33 +273,13 @@ const TextSelector = ({ text = blurb, onChange }) => {
     })
   }, [getBgColorForSelection, onClickWord, words])
 
-  const renderConcat = () => {
-    let concat = ''
-
-    //sort them.
-    const sortedSelections = _.sortBy(
-      [...selections],
-      (selection: any) => selection[0]
-    )
-
-    sortedSelections.forEach((selection: any) => {
-      if (selection[0] >= 0) {
-        const wordsFromSel = words.slice(selection[0], selection[1] + 1)
-        concat += wordsFromSel.join(' ')
-        concat += ' '
-      }
-    })
-
-    return concat
-  }
-
   return (
     <div>
-      <div>{renderWords()}</div>
       <div style={{ marginTop: 12, fontWeight: 'bold' }}>{renderConcat()}</div>
       <div style={{ marginTop: 12 }}>
         Words Remaining: {MAX_WORDS - getWordsSelectedCount()}
       </div>
+      <div>{renderWords()}</div>
     </div>
   )
 }
