@@ -32,9 +32,8 @@ const TextSelector = ({
   const [selectionState, setSelectionState] =
     React.useState("nothing_selected");
   const words = _.split(text.trim(), " ");
-  const [wordColorMap, setWordColorMap] = React.useState(Array(words.length));
 
-  React.useEffect(() => {
+  const wordColors = React.useMemo(() => {
     let newColorMap = Array(words.length);
     for (let i = 0; i < selections.length; i++) {
       const selection = selections[i];
@@ -43,11 +42,10 @@ const TextSelector = ({
         newColorMap[j] = color;
       }
     }
-    setWordColorMap(newColorMap);
+    return newColorMap;
   }, [selections, words.length]);
 
   const renderConcat = () => {
-    console.log("rendering Concat");
     let concat = "";
 
     const sortedSelections = _.sortBy(
@@ -160,13 +158,6 @@ const TextSelector = ({
     [isInSelection, selections.length]
   );
 
-  const getBgColorForSelection = React.useCallback(
-    (wordIndex: number) => {
-      return wordColorMap[wordIndex] || "none";
-    },
-    [wordColorMap]
-  );
-
   const getWordsSelectedCount = React.useCallback(() => {
     let wordsSelected = 0;
     for (let i = 0; i < selections.length; i++) {
@@ -236,37 +227,28 @@ const TextSelector = ({
     // const remainder = MAX_WORDS - getWordsSelectedCount()
 
     return words.map((word: string, index: number) => {
-      // const outOfBounds = false
+      const bgColor = wordColors[index] || "rgba(0,0,0,0)";
 
       return (
         <React.Fragment key={index}>
-          {word.includes("\n") ? (
+          {word.includes("\n") && (
             <>
               <br />
               <br />
-              <span
-                className={styles.word}
-                onClick={() => onClickWord(index)}
-                style={{ backgroundColor: getBgColorForSelection(index) }}
-              >
-                {word.trim()}
-              </span>
             </>
-          ) : (
-            <span
-              className={styles.word}
-              onClick={() => onClickWord(index)}
-              style={{ backgroundColor: getBgColorForSelection(index) }}
-            >
-              {word.trim()}
-            </span>
           )}
+          <span
+            className={styles.word}
+            onClick={() => onClickWord(index)}
+            style={{ backgroundColor: bgColor }}
+          >
+            {word.trim()}
+          </span>
 
           <span
             className={styles.space}
-            // onClick={() => onClickSpace(index)}
             style={{
-              backgroundColor: getBgColorForSelection(index),
+              backgroundColor: bgColor,
             }}
           >
             {" "}
@@ -274,7 +256,7 @@ const TextSelector = ({
         </React.Fragment>
       );
     });
-  }, [getBgColorForSelection, onClickWord, words]);
+  }, [words, wordColors, onClickWord]);
 
   return (
     <div>
