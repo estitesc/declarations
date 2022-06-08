@@ -32,6 +32,19 @@ const TextSelector = ({
   const [selectionState, setSelectionState] =
     React.useState("nothing_selected");
   const words = _.split(text.trim(), " ");
+  const [wordColorMap, setWordColorMap] = React.useState(Array(words.length));
+
+  React.useEffect(() => {
+    let newColorMap = Array(words.length);
+    for (let i = 0; i < selections.length; i++) {
+      const selection = selections[i];
+      const color = SEL_COLORS[i % SEL_COLORS.length];
+      for (let j = selection[0]; j <= selection[1]; j++) {
+        newColorMap[j] = color;
+      }
+    }
+    setWordColorMap(newColorMap);
+  }, [selections, words.length]);
 
   const renderConcat = () => {
     console.log("rendering Concat");
@@ -149,13 +162,9 @@ const TextSelector = ({
 
   const getBgColorForSelection = React.useCallback(
     (wordIndex: number) => {
-      const inSelection = findSelection(wordIndex);
-      if (inSelection.found) {
-        return SEL_COLORS[inSelection.selIndex];
-      }
-      return "none";
+      return wordColorMap[wordIndex] || "none";
     },
-    [findSelection]
+    [wordColorMap]
   );
 
   const getWordsSelectedCount = React.useCallback(() => {
