@@ -187,6 +187,10 @@ const TextSelector = ({
           return;
         }
 
+        if (selections.length >= MAX_SELECTIONS) {
+          return;
+        }
+
         createSelection(wordIndex);
         setSelectionState("first_selected");
         return;
