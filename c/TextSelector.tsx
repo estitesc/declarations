@@ -10,12 +10,9 @@ const SEL_COLORS = [
   "#BECBD7",
   "#D7BED0",
   "#DFA39F",
-  "#BECBD7",
-  "#D7BED0",
-  "#DFA39F",
-  "#BECBD7",
-  "#D7BED0",
-  "#DFA39F",
+  "#F0DCA8",
+  "#D8E4AA",
+  "#BFCEB1",
 ];
 const MAX_WORDS = 48;
 
