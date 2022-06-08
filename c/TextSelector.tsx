@@ -45,7 +45,7 @@ const TextSelector = ({
     return newColorMap;
   }, [selections, words.length]);
 
-  const renderConcat = () => {
+  const concatenated = React.useMemo(() => {
     let concat = "";
 
     const sortedSelections = _.sortBy(
@@ -62,9 +62,14 @@ const TextSelector = ({
     });
 
     return concat;
-  };
+  }, [selections, words]);
 
-  const renderedText = renderConcat();
+  React.useEffect(() => {
+    onChange({
+      indices: selections,
+      text: concatenated,
+    });
+  }, [concatenated, onChange, selections]);
 
   const isInSelection = React.useCallback(
     (wordIndex: number, selIndex: number) => {
@@ -112,7 +117,6 @@ const TextSelector = ({
 
   const completeSelection = React.useCallback(
     (endIndex: number) => {
-      console.log("trying to complete selection");
       const completedSelection = _.sortBy([selections[selIndex][0], endIndex]);
 
       let newSelections = [...selections];
@@ -198,34 +202,22 @@ const TextSelector = ({
           completeSelection(wordIndex);
           setSelectionState("nothing_selected");
         }
-
-        if (onChange) {
-          onChange({
-            indices: selections,
-            text: renderedText,
-          });
-        }
       }
     },
     [
-      selectionState,
+      cancelSelection,
+      completeSelection,
+      createSelection,
       findSelection,
       getWordsSelectedCount,
-      createSelection,
-      cancelSelection,
-      selections,
-      selIndex,
       isValidCompletion,
-      onChange,
-      completeSelection,
-      renderedText,
+      selIndex,
+      selectionState,
+      selections,
     ]
   );
 
   const renderWords = React.useCallback(() => {
-    console.log("rendering words");
-    // const remainder = MAX_WORDS - getWordsSelectedCount()
-
     return words.map((word: string, index: number) => {
       const bgColor = wordColors[index] || "rgba(0,0,0,0)";
 
@@ -260,7 +252,7 @@ const TextSelector = ({
 
   return (
     <div>
-      <div style={{ marginTop: 12, fontWeight: "bold" }}>{renderConcat()}</div>
+      <div style={{ marginTop: 12, fontWeight: "bold" }}>{concatenated}</div>
       <div style={{ marginTop: 12 }}>
         Words Remaining: {MAX_WORDS - getWordsSelectedCount()}
       </div>

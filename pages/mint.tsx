@@ -1,20 +1,22 @@
-import React from 'react'
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Mint.module.css'
-import DeclarationOfIndependence from '../c/DeclarationOfIndependence'
-import clsx from 'clsx'
-import { Logo } from '../c/Logo'
-import EmailForm from '../c/EmailForm'
-import TextSelector from '../c/TextSelector'
-import { declarationText } from '../utils/declarationText'
+import React from "react";
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Mint.module.css";
+import DeclarationOfIndependence from "../c/DeclarationOfIndependence";
+import clsx from "clsx";
+import { Logo } from "../c/Logo";
+import EmailForm from "../c/EmailForm";
+import TextSelector from "../c/TextSelector";
+import { declarationText } from "../utils/declarationText";
 
 const Mint: NextPage = () => {
-  const [selection, setSelection] = React.useState(null)
-  const [textSelKey, setTextSelKey] = React.useState(0)
+  const [selection, setSelection] = React.useState(null);
+  const [textSelKey, setTextSelKey] = React.useState(0);
 
-  console.log(selection)
+  const onChange = React.useCallback((selection: any) => {
+    setSelection(selection);
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -24,7 +26,7 @@ const Mint: NextPage = () => {
             <span>█▓▒░</span>Redeclarations
           </h1> */}
           <Logo />
-          <p className={styles.subtitle + ' fluid-type'}>
+          <p className={styles.subtitle + " fluid-type"}>
             A reclaiming of the Declaration of Independence by those who never
             signed it.
           </p>
@@ -32,18 +34,18 @@ const Mint: NextPage = () => {
 
         <button
           onClick={() => {
-            setSelection(null)
-            setTextSelKey(textSelKey + 1)
+            setSelection(null);
+            setTextSelKey(textSelKey + 1);
           }}
-          disabled={selection === null || selection === ''}
+          disabled={selection === null || selection === ""}
         >
           Reset
         </button>
 
         <TextSelector
-          key={textSelKey}
+          // key={textSelKey}
           text={declarationText}
-          onChange={(selection) => setSelection(selection)}
+          onChange={onChange}
         />
 
         {/* <div className={styles.intro}>
@@ -92,7 +94,7 @@ const Mint: NextPage = () => {
 
       {/* <DeclarationOfIndependence /> */}
     </div>
-  )
-}
+  );
+};
 
-export default Mint
+export default Mint;
