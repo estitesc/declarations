@@ -1,0 +1,123 @@
+.container {
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  width: 100vw;
+  overflow-x: hidden;
+  --padding: 2rem;
+}
+
+.container > div:first-child {
+  padding: var(--padding);
+  max-width: 72ch;
+  flex: 1 1 auto;
+  top: 0;
+}
+
+.container > .declarationProse {
+  border-left: 4px solid #eee;
+  padding: var(--padding);
+  flex: 1 1 auto;
+  max-width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .container {
+    flex-direction: column;
+    align-items: center;
+    --padding: 1rem;
+  }
+
+  .container > .declarationProse {
+    border-left: none;
+  }
+}
+
+.header {
+  margin-bottom: 1rem;
+}
+
+.logo {
+  max-width: 20rem;
+  margin-top: 2rem;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  --fluid-type-min: 1rem;
+  --fluid-type-max: 1.3rem;
+  --fluid-type-target: 1.5vw;
+  line-height: 1.4;
+}
+
+.byline {
+  color: gray;
+}
+
+.intro > p:not(:first-child) {
+  text-indent: 3ch;
+}
+
+.dropCap:first-letter {
+  float: left;
+  font-family: Georgia;
+  font-size: 3.4em;
+  line-height: 0.7;
+  padding-top: 0.12em;
+  padding-right: 0.15em;
+  padding-left: 0.1em;
+}
+
+.declarationGrid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(300px, 100%), 1fr));
+}
+
+.oulipo {
+  font-family: Menlo, monospace;
+  font-size: 0.75em;
+  padding: 1rem 0;
+  opacity: 0.65;
+}
+
+.background {
+  position: relative !important;
+  aspect-ratio: 1 / 1;
+  height: 180px;
+  margin: 0.5rem 0 1rem;
+  border: 4px solid black;
+}
+
+.declarationLink {
+  all: unset;
+  cursor: zoom-in;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 2.5px;
+  text-decoration-color: gray;
+  color: inherit;
+  font-weight: 600;
+}
+
+.declarationLinkSelected {
+  background: #fffd54;
+  cursor: zoom-out;
+}
+
+.declarationProse > * {
+  max-width: 58ch;
+}
+
+.declarationProse > * + * {
+  margin-top: 1.25rem;
+}
+
+.declarationProse hr {
+  margin: 1.5rem 0;
+  border-width: 2px;
+  border-color: rgba(0, 0, 0, 0.08);
+}
