@@ -1,6 +1,6 @@
 import styles from '../styles/Home.module.css'
 
-export const Logo: React.FC = (props) => (
+export const Logo = (props) => (
   <svg
     className={styles.logo}
     xmlns='http://www.w3.org/2000/svg'
