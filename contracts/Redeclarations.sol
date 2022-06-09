@@ -22,15 +22,7 @@ contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
         string imageUrl;
     }
 
-    event DeclMinted(
-        uint id,
-        string imageUrl,
-        string indices,
-        address payable minter,
-        uint addedAt
-    );
-
-    event DeclUpdated(
+    event DeclMintOrUpdate(
         uint id,
         string imageUrl,
         string indices,
@@ -41,7 +33,7 @@ contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
     function updateToken(uint _tokenId, string calldata _imageUrl, string calldata _indicesString) public nonReentrant onlyOwner {
         declarations[_tokenId] = Declaration(_tokenId, block.timestamp, _indicesString, _imageUrl);
 
-        emit DeclUpdated(
+        emit DeclMintOrUpdate(
             _tokenId,
             _imageUrl,
             _indicesString,
@@ -50,65 +42,42 @@ contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
         );
     }
 
-    function ownerMint(string calldata _imageUrl, uint[][] calldata _indices) public nonReentrant onlyOwner {
+    function ownerMint(string calldata _imageUrl, string calldata _indices) public nonReentrant onlyOwner {
         require(ownerMintCount < OWNER_SUPPLY, 'All owner declarations have been minted');
-        mint(_imageUrl, _indices);
+        internalMint(_imageUrl, _indices);
         ownerMintCount += 1;
     }
 
-    function publicMint(string calldata _imageUrl, uint[][] calldata _indices) public nonReentrant {
+    function publicMint(string calldata _imageUrl, string calldata _indices) public nonReentrant {
         require(publicMintCount < PUBLIC_SUPPLY, 'All public declarations have been minted');
-        mint(_imageUrl, _indices);
+        internalMint(_imageUrl, _indices);
         publicMintCount += 1;
     }
 
-    function mint(string calldata _imageUrl, uint[][] calldata _indices ) internal {
-        bool validUri = true;
-        // Check that the URI is pointing to one of our redeclaration endpoints
-        require(validUri, 'Uri is too long has too many lines');
-
+    function internalMint(string calldata _imageUrl, string calldata _indices ) internal {
         bool validIndices = true;
-        string memory indicesString = "[";
-        for (uint256 i = 0; i < _indices.length; i ++) {
-            if(_indices[i].length != 2) {
-                validIndices = false;
-                break;
-            }
-            indicesString = string.concat(indicesString, "[");
-            indicesString = string.concat(indicesString, toString(_indices[i][0]));
-            indicesString = string.concat(indicesString, ",");
-            indicesString = string.concat(indicesString, toString(_indices[i][1]));
-            indicesString = string.concat(indicesString, "]");
-            if(i < _indices.length - 1) {
-                indicesString = string.concat(indicesString, ",");
-            }
-        }
-        indicesString = string.concat(indicesString, "]");
-        // Iterate through the indices and ensure they make sense.
-        require(validIndices, 'Submitted indices are invalid.');
-
         uint256 totalMintCount = publicMintCount + ownerMintCount;
 
         // Check for uniqueness compared to existing declarations. 
         for (uint256 i = 0; i < totalMintCount; i ++) {
-            if(hashCompareWithLengthCheck(indicesString, declarations[i].indices)) {
+            if(hashCompareWithLengthCheck(_indices, declarations[i].indices)) {
                 validIndices = false;
             }
         }
         require(validIndices, 'This declaration has already been minted.');
 
-        string memory tokenURIJson = Base64.encode(bytes(string(abi.encodePacked('{"name": "Redeclaration #', toString(publicMintCount), '", "description": "A reclaiming of the Declaration of Independence by those who never signed it.", "image": "', _imageUrl, '", "selection": "', indicesString, '"}'))));
+        string memory tokenURIJson = Base64.encode(bytes(string(abi.encodePacked('{"name": "Redeclaration #', toString(publicMintCount), '", "description": "A reclaiming of the Declaration of Independence by those who never signed it.", "image": "', _imageUrl, '", "selection": "', _indices, '"}'))));
         string memory tokenURIString = string(abi.encodePacked('data:application/json;base64,', tokenURIJson));
 
         _safeMint(_msgSender(), totalMintCount);
         _setTokenURI(totalMintCount, tokenURIString);
-        declarations[totalMintCount] = Declaration(totalMintCount, block.timestamp, indicesString, _imageUrl);
+        declarations[totalMintCount] = Declaration(totalMintCount, block.timestamp, _indices, _imageUrl);
 
         // Trigger an event
-        emit DeclMinted(
+        emit DeclMintOrUpdate(
             totalMintCount,
             _imageUrl,
-            indicesString,
+            _indices,
             payable(msg.sender),
             block.timestamp
         );
@@ -123,9 +92,6 @@ contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
     }
 
     function toString(uint256 value) internal pure returns (string memory) {
-    // Inspired by OraclizeAPI's implementation - MIT license
-    // https://github.com/oraclize/ethereum-api/blob/b42146b063c7d6ee1358846c198246239e9360e8/oraclizeAPI_0.4.25.sol
-
         if (value == 0) {
             return "0";
         }
@@ -144,13 +110,9 @@ contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
         return string(buffer);
     }
 
-    constructor() ERC721("Redeclarations", "REDCL") Ownable() {}
+    constructor() ERC721("Redeclarations", "RDCLR") Ownable() {}
 }
 
-/// [MIT License]
-/// @title Base64
-/// @notice Provides a function for encoding some bytes in base64
-/// @author Brecht Devos <brecht@loopring.org>
 library Base64 {
     bytes internal constant TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 

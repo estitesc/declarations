@@ -51,7 +51,7 @@ contract("Redeclarations", ([deployer, minter]) => {
     before(async () => {
       result = await redeclarations.publicMint(
         "https://sonn3t.com/disclaimed_witch.png",
-        exampleIndices,
+        JSON.stringify(exampleIndices),
         { from: minter }
       );
       publicMintCount = await redeclarations.publicMintCount();
@@ -91,7 +91,7 @@ contract("Redeclarations", ([deployer, minter]) => {
     it("prevents a duplicate mint", async () => {
       await await redeclarations.publicMint(
         "https://sonn3t.com/disclaimed_witch.png",
-        exampleIndices,
+        JSON.stringify(exampleIndices),
         { from: minter }
       ).should.be.rejected;
     });
@@ -128,12 +128,12 @@ contract("Redeclarations", ([deployer, minter]) => {
     before(async () => {
       await redeclarations.publicMint(
         "https://sonn3t.com/disclaimed_witch.png",
-        altIndices,
+        JSON.stringify(altIndices),
         { from: minter }
       );
       result = await redeclarations.ownerMint(
         "https://sonn3t.com/pfps/pfp_5.png",
-        alternateIndices,
+        JSON.stringify(alternateIndices),
         { from: deployer }
       );
       ownerMintCount = await redeclarations.ownerMintCount();
@@ -166,7 +166,7 @@ contract("Redeclarations", ([deployer, minter]) => {
     it("cant be called by non-owner", async () => {
       await await redeclarations.ownerMint(
         "https://sonn3t.com/pfps/pfp_5.png",
-        anotherIndices,
+        JSON.stringify(anotherIndices),
         { from: minter }
       ).should.be.rejected;
     });
@@ -174,53 +174,9 @@ contract("Redeclarations", ([deployer, minter]) => {
     it("prevents a duplicate owner mint", async () => {
       await await redeclarations.ownerMint(
         "https://sonn3t.com/pfps/pfp_5.png",
-        alternateIndices,
+        JSON.stringify(alternateIndices),
         { from: deployer }
       ).should.be.rejected;
     });
   });
-
-  // describe("edit token", async () => {
-  //   let result, publicMintCount;
-
-  //   before(async () => {
-  //     result = await redeclarations.publicMint(
-  //       "https://sonn3t.com/disclaimed_witch.png",
-  //       exampleIndices,
-  //       { from: minter }
-  //     );
-  //     publicMintCount = await redeclarations.publicMintCount();
-  //   });
-
-  //   it("mints a redeclaration", async () => {
-  //     assert.equal(publicMintCount, 1);
-  //     const mintEvent = result.logs[0].args;
-  //     const customEvent = result.logs[1].args;
-  //     assert.equal(
-  //       customEvent.id.toNumber(),
-  //       publicMintCount.toNumber() - 1,
-  //       "id is correct"
-  //     );
-  //     assert.equal(customEvent.minter, minter, "owner is correct");
-  //     assert.equal(
-  //       customEvent.indices,
-  //       JSON.stringify(exampleIndices),
-  //       "indicies are correct"
-  //     );
-
-  //     assert.equal(
-  //       customEvent.imageUrl,
-  //       "https://sonn3t.com/disclaimed_witch.png",
-  //       "Image URL is correct"
-  //     );
-  //   });
-
-  //   it("prevents a duplicate mint", async () => {
-  //     await await redeclarations.publicMint(
-  //       "https://sonn3t.com/disclaimed_witch.png",
-  //       exampleIndices,
-  //       { from: minter }
-  //     ).should.be.rejected;
-  //   });
-  // });
 });
