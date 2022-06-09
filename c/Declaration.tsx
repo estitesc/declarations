@@ -2,6 +2,7 @@ import React from 'react'
 import styles from '../styles/Declaration.module.css'
 import { Textfit } from 'react-textfit'
 import seedrandom from 'seedrandom'
+import { Logo } from './Logo'
 
 const defaultText =
   'We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.'
@@ -133,10 +134,24 @@ const Declaration: React.FC<DeclarationProps> = ({
         {children}
       </Textfit>
 
-      <div style={{ paddingRight: '20%' }}>
-        <Textfit mode='single' max={48}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '2rem',
+        }}
+      >
+        <Logo
+          style={{
+            filter: 'invert()',
+            opacity: '0.8',
+            width: '50%',
+            maxWidth: 'none',
+            margin: '0',
+          }}
+        />
+        <Textfit mode='single'>
           <div className={styles.byline}>
-            <div className={styles.title}>redeclarations #21</div>
             <div className={styles.indices}>[23:47] [145:198] [341:482]</div>
           </div>
         </Textfit>

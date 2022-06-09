@@ -1,4 +1,22 @@
-@import url('https://rsms.me/inter/inter.css');
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: normal;
+  font-display: swap;
+  src: url('/fonts/inter/Inter-Regular.woff2')
+      format('woff2'),
+    url('/fonts/inter/Inter-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: bold;
+  font-display: swap;
+  src: url('/fonts/inter/Inter-Bold.woff2')
+      format('woff2'),
+    url('/fonts/inter/Inter-Bold.woff') format('woff');
+}
 
 @font-face {
   font-family: 'Inter Display';
