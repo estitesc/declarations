@@ -96,7 +96,7 @@ const Home: NextPage = () => {
 
         <div className={styles.oulipo}>
           xoxo,
-          <br /> — 0u1ip0
+          <br /> — <a href="https://twitter.com/yallah_halim">Halim</a>, <a href="https://twitter.com/dreamh4cker">Evan</a>, & <a href="https://twitter.com/chase_mccoy">Chase</a> obo 0u1ip0
         </div>
       </div>
 

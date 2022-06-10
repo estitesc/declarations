@@ -7,11 +7,16 @@ import { ERC721URIStorage } from "@openzeppelin/contracts/token/ERC721/extension
 import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
 import { ReentrancyGuard } from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
-contract DeclTest1 is ERC721URIStorage, ReentrancyGuard, Ownable {
+contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
     mapping(uint => Declaration) public declarations;
 
-    uint256 PUBLIC_SUPPLY = 528;
+    uint256 PUBLIC_SUPPLY = 468;
     uint256 public publicMintCount = 0;
+    uint256 PER_OWNER_SUPPLY = 25;
+    uint256 public ownerMintCount = 0;
+    uint256 public owner2MintCount = 0;
+    uint256 public owner3MintCount = 0;
+    uint256 public owner4MintCount = 0;
 
     struct Declaration {
         uint id;
@@ -20,7 +25,7 @@ contract DeclTest1 is ERC721URIStorage, ReentrancyGuard, Ownable {
         string imageUrl;
     }
 
-    event DeclMinted(
+    event DeclMintOrUpdate(
         uint id,
         string imageUrl,
         string indices,
@@ -28,59 +33,85 @@ contract DeclTest1 is ERC721URIStorage, ReentrancyGuard, Ownable {
         uint addedAt
     );
 
-    function mint(string calldata _imageUrl, uint[][] calldata _indices) public nonReentrant {
-        // Figure out how to limit minting depending on the senders individual limit
-        require(publicMintCount < PUBLIC_SUPPLY, 'All declarations have been minted');
+    function totalMintCount() internal view returns (uint) {
+        return publicMintCount + ownerMintCount + owner2MintCount + owner3MintCount + owner4MintCount;
+    }
 
-        bool validUri = true;
-        // Check that the URI is pointing to one of our redeclaration endpoints
-        require(validUri, 'Uri is too long has too many lines');
+    function updateToken(uint _tokenId, string calldata _imageUrl, string calldata _indicesString) public nonReentrant onlyOwner {
+        declarations[_tokenId] = Declaration(_tokenId, block.timestamp, _indicesString, _imageUrl);
 
+        emit DeclMintOrUpdate(
+            _tokenId,
+            _imageUrl,
+            _indicesString,
+            payable(msg.sender),
+            block.timestamp
+        );
+    }
+
+    function ownerMint(string calldata _imageUrl, string calldata _indices) public nonReentrant onlyOwner {
+        require(ownerMintCount < PER_OWNER_SUPPLY, 'All owner declarations have been minted');
+        internalMint(_imageUrl, _indices);
+        ownerMintCount += 1;
+    }
+
+    function owner2Mint(string calldata _imageUrl, string calldata _indices) public nonReentrant {
+        address owner2Address = 0x61373CDDB315d0A85C88D8d335AE3da85eE46aE2;
+        require(msg.sender == owner2Address);
+        require(owner2MintCount < PER_OWNER_SUPPLY, 'All owner declarations have been minted');
+        internalMint(_imageUrl, _indices);
+        owner2MintCount += 1;
+    }
+
+    function owner3Mint(string calldata _imageUrl, string calldata _indices) public nonReentrant {
+        address owner3Address = 0xD62e2e5d5aEad011C84cEF88D22D6dD9733a495d;
+        require(msg.sender == owner3Address);
+        require(owner3MintCount < PER_OWNER_SUPPLY, 'All owner declarations have been minted');
+        internalMint(_imageUrl, _indices);
+        owner3MintCount += 1;
+    }
+
+    function owner4Mint(string calldata _imageUrl, string calldata _indices) public nonReentrant {
+        address owner4Address = 0xD62e2e5d5aEad011C84cEF88D22D6dD9733a495d;
+        require(msg.sender == owner4Address);
+        require(owner4MintCount < PER_OWNER_SUPPLY, 'All owner declarations have been minted');
+        internalMint(_imageUrl, _indices);
+        owner4MintCount += 1;
+    }
+
+    function publicMint(string calldata _imageUrl, string calldata _indices) public nonReentrant {
+        require(publicMintCount < PUBLIC_SUPPLY, 'All public declarations have been minted');
+        internalMint(_imageUrl, _indices);
+        publicMintCount += 1;
+    }
+
+    function internalMint(string calldata _imageUrl, string calldata _indices ) internal {
         bool validIndices = true;
-        string memory indicesString = "[";
-        for (uint256 i = 0; i < _indices.length; i ++) {
-            if(_indices[i].length != 2) {
-                validIndices = false;
-                break;
-            }
-            indicesString = string.concat(indicesString, "[");
-            indicesString = string.concat(indicesString, toString(_indices[i][0]));
-            indicesString = string.concat(indicesString, ",");
-            indicesString = string.concat(indicesString, toString(_indices[i][1]));
-            indicesString = string.concat(indicesString, "]");
-            if(i < _indices.length - 1) {
-                indicesString = string.concat(indicesString, ",");
-            }
-        }
-        indicesString = string.concat(indicesString, "]");
-        // Iterate through the indices and ensure they make sense.
-        require(validIndices, 'Submitted indices are invalid.');
+        uint tokenId = totalMintCount();
 
         // Check for uniqueness compared to existing declarations. 
-        for (uint256 i = 0; i < publicMintCount; i ++) {
-            if(hashCompareWithLengthCheck(indicesString, declarations[i].indices)) {
+        for (uint256 i = 0; i < tokenId; i ++) {
+            if(hashCompareWithLengthCheck(_indices, declarations[i].indices)) {
                 validIndices = false;
             }
         }
         require(validIndices, 'This declaration has already been minted.');
 
-        string memory tokenURIJson = Base64.encode(bytes(string(abi.encodePacked('{"name": "Redeclaration #', toString(publicMintCount), '", "description": "A reclaiming of the Declaration of Independence by those who never signed it.", "image": "', _imageUrl, '", "selection": "', indicesString, '"}'))));
+        string memory tokenURIJson = Base64.encode(bytes(string(abi.encodePacked('{"name": "Redeclaration #', toString(tokenId), '", "description": "A reclaiming of the Declaration of Independence by those who never signed it.", "image": "', _imageUrl, '", "selection": "', _indices, '"}'))));
         string memory tokenURIString = string(abi.encodePacked('data:application/json;base64,', tokenURIJson));
 
-        _safeMint(_msgSender(), publicMintCount);
-        _setTokenURI(publicMintCount, tokenURIString);
-        declarations[publicMintCount] = Declaration(publicMintCount, block.timestamp, indicesString, _imageUrl);
+        _safeMint(_msgSender(), tokenId);
+        _setTokenURI(tokenId, tokenURIString);
+        declarations[tokenId] = Declaration(tokenId, block.timestamp, _indices, _imageUrl);
 
         // Trigger an event
-        emit DeclMinted(
-            publicMintCount,
+        emit DeclMintOrUpdate(
+            tokenId,
             _imageUrl,
-            indicesString,
+            _indices,
             payable(msg.sender),
             block.timestamp
         );
-
-        publicMintCount += 1;
     }
 
     function hashCompareWithLengthCheck(string memory a, string memory b) internal pure returns (bool) {
@@ -92,9 +123,6 @@ contract DeclTest1 is ERC721URIStorage, ReentrancyGuard, Ownable {
     }
 
     function toString(uint256 value) internal pure returns (string memory) {
-    // Inspired by OraclizeAPI's implementation - MIT license
-    // https://github.com/oraclize/ethereum-api/blob/b42146b063c7d6ee1358846c198246239e9360e8/oraclizeAPI_0.4.25.sol
-
         if (value == 0) {
             return "0";
         }
@@ -113,13 +141,9 @@ contract DeclTest1 is ERC721URIStorage, ReentrancyGuard, Ownable {
         return string(buffer);
     }
 
-    constructor() ERC721("Redeclarations", "REDCL") Ownable() {}
+    constructor() ERC721("Redeclarations", "RDCLR") Ownable() {}
 }
 
-/// [MIT License]
-/// @title Base64
-/// @notice Provides a function for encoding some bytes in base64
-/// @author Brecht Devos <brecht@loopring.org>
 library Base64 {
     bytes internal constant TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 

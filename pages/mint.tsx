@@ -9,14 +9,24 @@ import { Logo } from "../c/Logo";
 import EmailForm from "../c/EmailForm";
 import TextSelector from "../c/TextSelector";
 import { declarationText } from "../utils/declarationText";
+import useConnectWallet from "../h/useConnectWallet";
 
 const Mint: NextPage = () => {
   const [selection, setSelection] = React.useState(null);
   const [textSelKey, setTextSelKey] = React.useState(0);
+  const [walletAddress, setWalletAddress] = React.useState("");
 
   const onChange = React.useCallback((selection: any) => {
     setSelection(selection);
   }, []);
+
+  console.log(selection);
+
+  const connectWallet = useConnectWallet();
+  const connectWalletAndStoreAddress = React.useCallback(async () => {
+    const address = await connectWallet();
+    setWalletAddress(address);
+  }, [connectWallet]);
 
   return (
     <div className={styles.container}>
@@ -32,6 +42,7 @@ const Mint: NextPage = () => {
           </p>
         </header>
 
+        <button onClick={connectWalletAndStoreAddress}>connect wallet</button>
         <button
           onClick={() => {
             setSelection(null);
