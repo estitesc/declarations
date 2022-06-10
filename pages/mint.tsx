@@ -14,10 +14,15 @@ import useConnectWallet from "../h/useConnectWallet";
 const Mint: NextPage = () => {
   const [selection, setSelection] = React.useState(null);
   const [textSelKey, setTextSelKey] = React.useState(0);
+  const [walletAddress, setWalletAddress] = React.useState("");
 
   console.log(selection);
 
   const connectWallet = useConnectWallet();
+  const connectWalletAndStoreAddress = React.useCallback(async () => {
+    const address = await connectWallet();
+    setWalletAddress(address);
+  }, [connectWallet]);
 
   return (
     <div className={styles.container}>
@@ -33,7 +38,7 @@ const Mint: NextPage = () => {
           </p>
         </header>
 
-        <button onClick={connectWallet}>connect wallet</button>
+        <button onClick={connectWalletAndStoreAddress}>connect wallet</button>
         <button
           onClick={() => {
             setSelection(null);
