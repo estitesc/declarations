@@ -1,5 +1,5 @@
 import * as React from "react";
-import DeclTest1 from "../abis/DeclTest1.json";
+import Redeclarations from "../abis/Redeclarations.json";
 import { ethers } from "ethers";
 import useNetwork from "./useNetwork";
 
@@ -11,19 +11,22 @@ const useMint = () => {
       const { provider, networkId } = await setupNetwork();
 
       // @ts-ignore
-      const networkData = DeclTest1.networks[networkId];
+      const networkData = Redeclarations.networks[networkId];
       if (networkData) {
         const contract = new ethers.Contract(
           networkData.address,
-          DeclTest1.abi,
+          Redeclarations.abi,
           provider.getSigner()
         );
         (async () => {
-          const result = await contract.mint(tokenUri, indices);
+          const result = await contract.publicMint(
+            tokenUri,
+            JSON.stringify(indices)
+          );
           console.log("mint result", result);
         })();
       } else {
-        console.log("DeclTest1 not deployed to the network in question");
+        console.log("Redeclarations not deployed to the network in question");
       }
     },
     [setupNetwork]
