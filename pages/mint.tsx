@@ -16,6 +16,10 @@ const Mint: NextPage = () => {
   const [textSelKey, setTextSelKey] = React.useState(0);
   const [walletAddress, setWalletAddress] = React.useState("");
 
+  const onChange = React.useCallback((selection: any) => {
+    setSelection(selection);
+  }, []);
+
   console.log(selection);
 
   const connectWallet = useConnectWallet();
@@ -50,9 +54,9 @@ const Mint: NextPage = () => {
         </button>
 
         <TextSelector
-          key={textSelKey}
+          // key={textSelKey}
           text={declarationText}
-          onChange={(selection) => setSelection(selection)}
+          onChange={onChange}
         />
 
         {/* <div className={styles.intro}>
