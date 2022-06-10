@@ -136,8 +136,9 @@ contract("Redeclarations", ([deployer, minter]) => {
         JSON.stringify(alternateIndices),
         { from: deployer }
       );
-      ownerMintCount = await redeclarations.ownerMintCount();
+
       publicMintCount = await redeclarations.publicMintCount();
+      ownerMintCount = await redeclarations.ownerMintCount();
     });
 
     it("owner mints a redeclaration", async () => {

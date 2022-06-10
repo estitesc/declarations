@@ -12,8 +12,11 @@ contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
 
     uint256 PUBLIC_SUPPLY = 468;
     uint256 public publicMintCount = 0;
-    uint256 OWNER_SUPPLY = 100;
+    uint256 PER_OWNER_SUPPLY = 25;
     uint256 public ownerMintCount = 0;
+    uint256 public owner2MintCount = 0;
+    uint256 public owner3MintCount = 0;
+    uint256 public owner4MintCount = 0;
 
     struct Declaration {
         uint id;
@@ -30,6 +33,10 @@ contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
         uint addedAt
     );
 
+    function totalMintCount() internal view returns (uint) {
+        return publicMintCount + ownerMintCount + owner2MintCount + owner3MintCount + owner4MintCount;
+    }
+
     function updateToken(uint _tokenId, string calldata _imageUrl, string calldata _indicesString) public nonReentrant onlyOwner {
         declarations[_tokenId] = Declaration(_tokenId, block.timestamp, _indicesString, _imageUrl);
 
@@ -43,9 +50,33 @@ contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
     }
 
     function ownerMint(string calldata _imageUrl, string calldata _indices) public nonReentrant onlyOwner {
-        require(ownerMintCount < OWNER_SUPPLY, 'All owner declarations have been minted');
+        require(ownerMintCount < PER_OWNER_SUPPLY, 'All owner declarations have been minted');
         internalMint(_imageUrl, _indices);
         ownerMintCount += 1;
+    }
+
+    function owner2Mint(string calldata _imageUrl, string calldata _indices) public nonReentrant {
+        address owner2Address = 0x61373CDDB315d0A85C88D8d335AE3da85eE46aE2;
+        require(msg.sender == owner2Address);
+        require(owner2MintCount < PER_OWNER_SUPPLY, 'All owner declarations have been minted');
+        internalMint(_imageUrl, _indices);
+        owner2MintCount += 1;
+    }
+
+    function owner3Mint(string calldata _imageUrl, string calldata _indices) public nonReentrant {
+        address owner3Address = 0xD62e2e5d5aEad011C84cEF88D22D6dD9733a495d;
+        require(msg.sender == owner3Address);
+        require(owner3MintCount < PER_OWNER_SUPPLY, 'All owner declarations have been minted');
+        internalMint(_imageUrl, _indices);
+        owner3MintCount += 1;
+    }
+
+    function owner4Mint(string calldata _imageUrl, string calldata _indices) public nonReentrant {
+        address owner4Address = 0xD62e2e5d5aEad011C84cEF88D22D6dD9733a495d;
+        require(msg.sender == owner4Address);
+        require(owner4MintCount < PER_OWNER_SUPPLY, 'All owner declarations have been minted');
+        internalMint(_imageUrl, _indices);
+        owner4MintCount += 1;
     }
 
     function publicMint(string calldata _imageUrl, string calldata _indices) public nonReentrant {
@@ -56,26 +87,26 @@ contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
 
     function internalMint(string calldata _imageUrl, string calldata _indices ) internal {
         bool validIndices = true;
-        uint256 totalMintCount = publicMintCount + ownerMintCount;
+        uint tokenId = totalMintCount();
 
         // Check for uniqueness compared to existing declarations. 
-        for (uint256 i = 0; i < totalMintCount; i ++) {
+        for (uint256 i = 0; i < tokenId; i ++) {
             if(hashCompareWithLengthCheck(_indices, declarations[i].indices)) {
                 validIndices = false;
             }
         }
         require(validIndices, 'This declaration has already been minted.');
 
-        string memory tokenURIJson = Base64.encode(bytes(string(abi.encodePacked('{"name": "Redeclaration #', toString(publicMintCount), '", "description": "A reclaiming of the Declaration of Independence by those who never signed it.", "image": "', _imageUrl, '", "selection": "', _indices, '"}'))));
+        string memory tokenURIJson = Base64.encode(bytes(string(abi.encodePacked('{"name": "Redeclaration #', toString(tokenId), '", "description": "A reclaiming of the Declaration of Independence by those who never signed it.", "image": "', _imageUrl, '", "selection": "', _indices, '"}'))));
         string memory tokenURIString = string(abi.encodePacked('data:application/json;base64,', tokenURIJson));
 
-        _safeMint(_msgSender(), totalMintCount);
-        _setTokenURI(totalMintCount, tokenURIString);
-        declarations[totalMintCount] = Declaration(totalMintCount, block.timestamp, _indices, _imageUrl);
+        _safeMint(_msgSender(), tokenId);
+        _setTokenURI(tokenId, tokenURIString);
+        declarations[tokenId] = Declaration(tokenId, block.timestamp, _indices, _imageUrl);
 
         // Trigger an event
         emit DeclMintOrUpdate(
-            totalMintCount,
+            tokenId,
             _imageUrl,
             _indices,
             payable(msg.sender),
