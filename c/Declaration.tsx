@@ -134,13 +134,7 @@ const Declaration: React.FC<DeclarationProps> = ({
         {children}
       </Textfit>
 
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '2rem',
-        }}
-      >
+      <div>
         <Logo
           style={{
             filter: 'invert()',
@@ -148,6 +142,7 @@ const Declaration: React.FC<DeclarationProps> = ({
             width: '50%',
             maxWidth: 'none',
             margin: '0',
+            marginBottom: '2rem',
           }}
         />
         <Textfit mode='single'>
