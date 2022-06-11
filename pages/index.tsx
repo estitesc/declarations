@@ -36,10 +36,7 @@ const Home: NextPage = () => {
         </div>
 
         <header className={styles.header}>
-          {/* <h1 className={styles.title + ' fluid-type'}>
-            <span>█▓▒░</span>Redeclarations
-          </h1> */}
-          <Logo />
+          <Logo className={styles.logo} />
           <p className={styles.subtitle + " fluid-type"}>
             A reclaiming of the Declaration of Independence by those who never
             signed it.

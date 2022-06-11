@@ -1,8 +1,5 @@
-import styles from '../styles/Home.module.css'
-
 export const Logo = (props) => (
   <svg
-    className={styles.logo}
     xmlns='http://www.w3.org/2000/svg'
     viewBox='0 0 1253 134'
     fill='none'

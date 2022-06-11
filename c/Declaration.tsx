@@ -3,6 +3,7 @@ import styles from '../styles/Declaration.module.css'
 import { Textfit } from 'react-textfit'
 import seedrandom from 'seedrandom'
 import { Logo } from './Logo'
+import clsx from 'clsx'
 
 const defaultText =
   'We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.'
@@ -112,8 +113,11 @@ export const Background: React.FC<BackgroundProps> = ({
         <feConvolveMatrix kernelMatrix='1 5 -1 -1 0 4 0 0 -1' />
       </filter>
 
-      {Array.from(Array(rand(25) + 5)).map((i) => (
-        <Rect fill={colors[rand(colors.length)]} key={i} />
+      {Array.from(Array(rand(25) + 5)).map((num, i) => (
+        <Rect
+          fill={colors[rand(colors.length)]}
+          key={`${Date.now()} ${i}`}
+        />
       ))}
     </svg>
   )
@@ -122,15 +126,26 @@ export const Background: React.FC<BackgroundProps> = ({
 interface DeclarationProps {
   children?: string
   size?: string
+  address?: string
+  compact?: boolean
 }
 
 const Declaration: React.FC<DeclarationProps> = ({
   children = defaultText,
+  address,
   size,
+  compact = false,
 }) => {
   return (
-    <div className={styles.canvas} style={{ height: size, width: size }}>
-      <Textfit mode='multi' className={styles.text + ' ' + styles.dropCap}>
+    <div
+      className={clsx(styles.canvas, compact && 'compact')}
+      style={{
+        height: size,
+        width: size,
+        ...(compact ? { padding: '2rem' } : {}),
+      }}
+    >
+      <Textfit mode='multi' className={styles.text} max={compact ? 30 : 90}>
         {children}
       </Textfit>
 
@@ -142,17 +157,17 @@ const Declaration: React.FC<DeclarationProps> = ({
             width: '50%',
             maxWidth: 'none',
             margin: '0',
-            marginBottom: '2rem',
+            marginBottom: compact ? '1rem' : '2rem',
           }}
         />
-        <Textfit mode='single'>
-          <div className={styles.byline}>
+        <Textfit mode='single' max={compact ? 40 : 100}>
+          <div>
             <div className={styles.indices}>[23:47] [145:198] [341:482]</div>
           </div>
         </Textfit>
       </div>
 
-      <Background seed={children.toString()} />
+      {children && <Background seed={children.toString()} address={address} />}
     </div>
   )
 }

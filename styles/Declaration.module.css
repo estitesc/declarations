@@ -28,13 +28,6 @@
   font-feature-settings: "salt", "ss02";
 }
 
-.byline {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  line-height: 1.1;
-}
-
 .title {
   font-family: 'Times New Roman';
   color: #adb5bd;
@@ -52,7 +45,6 @@
 }
 
 .text:after {
-  /* content: ''; */
   position: absolute;
   height: 1.25em;
   width: 1.35em;
@@ -61,20 +53,6 @@
   top: 0;
   left: 0.02em;
   mix-blend-mode: hard-light;
-}
-
-.text.triangle:after {
-  content: '';
-  position: absolute;
-  background: #37b24d;
-  top: 0;
-  left: 0.02em;
-  mix-blend-mode: hard-light;
-  width: 0;
-  height: 0;
-  border-left: 1.25em solid transparent;
-  border-right: 1.25em solid transparent;
-  border-bottom: 2.5em solid #37b24d;
 }
 
 .background {

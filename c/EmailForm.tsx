@@ -17,8 +17,6 @@ const EmailForm: React.FC<EmailFormProps> = ({ actionUrl, onSuccess }) => {
     const path = `${actionUrl}&${valueString}`
     const url = path.replace('/post?', '/post-json?')
     const regex = /^([\w_\.\-\+])+\@([\w\-]+\.)+([\w]{2,10})+$/
-    console.log('url is', url)
-    console.log('regex result', regex.test(email))
     !regex.test(email) ? setStatus('empty') : sendData(url)
   }
 
