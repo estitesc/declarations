@@ -10,8 +10,6 @@
   background: #212529;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  gap: clamp(.5rem, 3vmax, 1.5rem);
   padding: max(7%, 1rem);
   padding-bottom: max(5%, 1rem);
   color: white;
@@ -26,6 +24,8 @@
   position: relative;
   font-weight: bold;
   font-feature-settings: "salt", "ss02";
+  margin-bottom: 1.5rem;
+  margin-bottom: clamp(.5rem, 3vmax, 1.5rem);
 }
 
 .title {
