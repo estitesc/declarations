@@ -226,13 +226,12 @@ const TextSelector = ({
     return words.map((word: string, index: number) => {
       const bgColor = wordColors[index] || 'rgba(0,0,0,0)'
       const disabled =
-      selectionState === 'first_selected' &&
-      inProgressSelection &&
-      (index > inProgressSelection + wordRemaining ||
-        index < inProgressSelection - wordRemaining)
-        ? true
-        : false
-
+        selectionState === 'first_selected' &&
+        inProgressSelection &&
+        (index > inProgressSelection + wordRemaining ||
+          index < inProgressSelection - wordRemaining)
+          ? true
+          : false
 
       return (
         <React.Fragment key={index}>
@@ -250,7 +249,7 @@ const TextSelector = ({
             style={{
               backgroundColor: bgColor,
               opacity: disabled ? 0.5 : 1,
-              cursor: disabled ? 'not-allowed' : 'pointer'
+              cursor: disabled ? 'not-allowed' : 'pointer',
             }}
           >
             {word.trim()}
@@ -267,14 +266,21 @@ const TextSelector = ({
         </React.Fragment>
       )
     })
-  }, [words, wordColors, onClickWord])
+  }, [
+    words,
+    wordColors,
+    onClickWord,
+    getWordsSelectedCount,
+    inProgressSelection,
+    selectionState,
+  ])
 
   return (
     <div>
-      <div style={{ marginTop: 12, fontWeight: 'bold' }}>{concatenated}</div>
-      <div style={{ marginTop: 12 }}>
+      {/* <div style={{ marginTop: 12, fontWeight: 'bold' }}>{concatenated}</div> */}
+      {/* <div style={{ marginTop: 12 }}>
         Words Remaining: {MAX_WORDS - getWordsSelectedCount()}
-      </div>
+      </div> */}
       <div>{renderWords()}</div>
     </div>
   )

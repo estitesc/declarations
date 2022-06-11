@@ -4,6 +4,9 @@
   justify-content: center;
   padding: 4rem;
   gap: 6rem;
+  border: 24px solid black;
+  border-radius: 40px;
+  background: white;
 }
 
 .container {
@@ -11,7 +14,7 @@
 }
 
 .container > div:first-child {
-  max-width: 72ch;
+  max-width: 68ch;
   flex: 1 1 auto;
 }
 

@@ -30,39 +30,61 @@ const Mint: NextPage = () => {
   }, [connectWallet])
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <div>
-          <header className={styles.header}>
-            <Logo className={styles.logo} />
-            <p className={styles.subtitle + ' fluid-type'}>
-              A reclaiming of the Declaration of Independence by those who never
-              signed it.
-            </p>
-          </header>
+    <div style={{ background: 'black' }}>
+      <div className={styles.wrapper}>
+        <div className={styles.container}>
+          <div>
+            <header className={styles.header}>
+              <Logo className={styles.logo} />
+              <p
+                className={clsx(styles.subtitle, 'fluid-type')}
+                style={{ marginBottom: '0.75em', marginTop: '1em' }}
+              >
+                A reclaiming of the Declaration of Independence by those who
+                never signed it.
+              </p>
+              <p className={clsx(styles.subtitle, 'fluid-type')}>
+                Reclaim yours by connecting a wallet and selecting up to 40
+                words that you will make your own.
+              </p>
+            </header>
 
-          <button onClick={connectWalletAndStoreAddress}>connect wallet</button>
-          <button
-            onClick={() => {
-              setSelection({})
-              setTextSelKey(textSelKey + 1)
-            }}
-            disabled={selection === null || selection?.text === ''}
-          >
-            Reset
-          </button>
+            <button onClick={connectWalletAndStoreAddress}>
+              connect wallet
+            </button>
+            <button
+              onClick={() => {
+                setSelection({})
+                setTextSelKey(textSelKey + 1)
+              }}
+              disabled={selection === null || selection?.text === ''}
+            >
+              Reset
+            </button>
 
-          <TextSelector
-            key={textSelKey}
-            text={declarationText}
-            onChange={onChange}
-          />
+            <div
+              style={{
+                margin: '3rem 0 1rem',
+                textTransform: 'uppercase',
+                color: '#888',
+                fontSize: '0.8rem',
+              }}
+            >
+              ↓ click to start and end a selection
+            </div>
+
+            <TextSelector
+              key={textSelKey}
+              text={declarationText}
+              onChange={onChange}
+            />
+          </div>
         </div>
-      </div>
-      <div className={styles.declaration}>
-        <Declaration size='500px' compact address={walletAddress}>
-          {selection?.text}
-        </Declaration>
+        <div className={styles.declaration}>
+          <Declaration size='500px' compact address={walletAddress}>
+            {selection?.text}
+          </Declaration>
+        </div>
       </div>
     </div>
   )
