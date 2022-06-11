@@ -59,9 +59,11 @@ const Mint: NextPage = () => {
           />
         </div>
       </div>
-      <Declaration size='500px' compact address={walletAddress}>
-        {selection?.text}
-      </Declaration>
+      <div className={styles.declaration}>
+        <Declaration size='500px' compact address={walletAddress}>
+          {selection?.text}
+        </Declaration>
+      </div>
     </div>
   )
 }
