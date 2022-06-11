@@ -131,7 +131,7 @@ interface DeclarationProps {
 }
 
 const Declaration: React.FC<DeclarationProps> = ({
-  children = defaultText,
+  children,
   address,
   size,
   compact = false,

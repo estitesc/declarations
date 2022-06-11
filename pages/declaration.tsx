@@ -5,12 +5,14 @@ import { useRouter } from 'next/router'
 import Declaration from '../c/Declaration'
 
 const Home: NextPage = () => {
-  const {query} = useRouter()
-  const {text, size = '1600px'} = query
+  const { query } = useRouter()
+  const { text, size = '1600px', address } = query
 
   return (
     <div className={styles.page}>
-      <Declaration size={size.toString()}>{text?.toString()}</Declaration>
+      <Declaration size={size.toString()} address={address}>
+        {text?.toString()}
+      </Declaration>
     </div>
   )
 }

@@ -49,18 +49,29 @@ const Mint: NextPage = () => {
               </p>
             </header>
 
-            <button onClick={connectWalletAndStoreAddress}>
-              connect wallet
-            </button>
-            <button
-              onClick={() => {
-                setSelection({})
-                setTextSelKey(textSelKey + 1)
-              }}
-              disabled={selection === null || selection?.text === ''}
-            >
-              Reset
-            </button>
+            <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+              <button
+                className={clsx(
+                  styles.button,
+                  walletAddress && styles.buttonWalletConnected
+                )}
+                onClick={connectWalletAndStoreAddress}
+              >
+                {walletAddress
+                  ? `Connected: ${walletAddress}`
+                  : 'Connect wallet'}
+              </button>
+              <button
+                className={styles.button}
+                onClick={() => {
+                  setSelection({})
+                  setTextSelKey(textSelKey + 1)
+                }}
+                disabled={selection === null || selection?.text === ''}
+              >
+                Reset
+              </button>
+            </div>
 
             <div
               style={{
@@ -84,6 +95,27 @@ const Mint: NextPage = () => {
           <Declaration size='500px' compact address={walletAddress}>
             {selection?.text}
           </Declaration>
+
+          {walletAddress && selection && selection?.text !== '' && (
+            <button
+              className={clsx(styles.button, styles.mintButton)}
+              onClick={() => {
+                const params = {
+                  text: selection.text,
+                  address: walletAddress,
+                  width: 1600,
+                  height: 1600,
+                }
+                const imageURL = `https://screenshot-khaki.vercel.app/api?url=https://www.redeclarations.com/declaration?${new URLSearchParams(
+                  params
+                ).toString()}`
+
+                // fetch(imageURL)
+              }}
+            >
+              Mint
+            </button>
+          )}
         </div>
       </div>
     </div>
