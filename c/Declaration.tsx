@@ -145,7 +145,7 @@ const Declaration: React.FC<DeclarationProps> = ({
         ...(compact ? { padding: '2rem' } : {}),
       }}
     >
-      <Textfit mode='multi' className={styles.text} max={compact ? 30 : 90}>
+      <Textfit mode='multi' className={styles.text} max={compact ? 35 : 100}>
         {children}
       </Textfit>
 
