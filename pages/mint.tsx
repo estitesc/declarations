@@ -103,8 +103,8 @@ const Mint: NextPage = () => {
                 const params = {
                   text: selection.text,
                   address: walletAddress,
-                  width: 1600,
-                  height: 1600,
+                  width: '1600',
+                  height: '1600',
                 }
                 const imageURL = `https://screenshot-khaki.vercel.app/api?url=https://www.redeclarations.com/declaration?${new URLSearchParams(
                   params
