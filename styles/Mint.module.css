@@ -4,9 +4,6 @@
   justify-content: center;
   padding: 4rem;
   gap: 6rem;
-  border: 24px solid black;
-  border-radius: 40px;
-  background: white;
 }
 
 .container {
@@ -52,6 +49,9 @@
 .declaration {
   position: sticky;
   top: 4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .button {
@@ -86,7 +86,7 @@
 }
 
 .mintButton {
-  width: fill;
+  /* width: fill; */
+  flex-grow: 1;
   text-align: center;
-  margin-top: 1.5rem;
 }

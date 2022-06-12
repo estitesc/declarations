@@ -145,7 +145,7 @@ const Declaration: React.FC<DeclarationProps> = ({
         ...(compact ? { padding: '2rem' } : {}),
       }}
     >
-      <Textfit mode='multi' className={styles.text} max={compact ? 33 : 100}>
+      <Textfit mode='multi' className={styles.text} max={compact ? 34 : 100}>
         {children}
       </Textfit>
 
@@ -157,14 +157,14 @@ const Declaration: React.FC<DeclarationProps> = ({
             width: '50%',
             maxWidth: 'none',
             margin: '0',
-            marginBottom: compact ? '1rem' : '2rem',
+            // marginBottom: compact ? '1rem' : '2rem',
           }}
         />
-        <Textfit mode='single' max={compact ? 40 : 100}>
+        {/* <Textfit mode='single' max={compact ? 40 : 100}>
           <div>
             <div className={styles.indices}>[23:47] [145:198] [341:482]</div>
           </div>
-        </Textfit>
+        </Textfit> */}
       </div>
 
       {children && <Background seed={children.toString()} address={address} />}
