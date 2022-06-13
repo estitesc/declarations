@@ -64,7 +64,7 @@ contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
     }
 
     function owner3Mint(string calldata _imageUrl, string calldata _indices) public nonReentrant {
-        address owner3Address = 0xD62e2e5d5aEad011C84cEF88D22D6dD9733a495d;
+        address owner3Address = 0x7ace2E1bb87bEa8AD952eAb4De66B7D2a4992Ca4;
         require(msg.sender == owner3Address);
         require(owner3MintCount < PER_OWNER_SUPPLY, 'All owner declarations have been minted');
         internalMint(_imageUrl, _indices);
@@ -72,7 +72,7 @@ contract Redeclarations is ERC721URIStorage, ReentrancyGuard, Ownable {
     }
 
     function owner4Mint(string calldata _imageUrl, string calldata _indices) public nonReentrant {
-        address owner4Address = 0xD62e2e5d5aEad011C84cEF88D22D6dD9733a495d;
+        address owner4Address = 0x224D199FCE0B9c23f36Ffe60406A53812ddf773D;
         require(msg.sender == owner4Address);
         require(owner4MintCount < PER_OWNER_SUPPLY, 'All owner declarations have been minted');
         internalMint(_imageUrl, _indices);
