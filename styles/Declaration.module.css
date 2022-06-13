@@ -24,8 +24,8 @@
   position: relative;
   font-weight: bold;
   font-feature-settings: "salt", "ss02";
-  margin-bottom: 1.5rem;
-  margin-bottom: clamp(.5rem, 3vmax, 1.5rem);
+  /* margin-bottom: 4rem; */
+  /* margin-bottom: clamp(.5rem, 3vmax, 1.5rem); */
 }
 
 .title {
