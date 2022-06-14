@@ -90,3 +90,14 @@
   flex-grow: 1;
   text-align: center;
 }
+
+.link {
+  font-family: Menlo, monospace;
+  font-size: 0.75em;
+  color: black;
+  opacity: 0.65;
+}
+
+.link:hover {
+  opacity: 1;
+}
