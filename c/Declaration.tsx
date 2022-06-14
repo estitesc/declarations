@@ -172,17 +172,17 @@ const Declaration: React.FC<DeclarationProps> = ({
         />
       </div>
 
-      {/* {children && (
+      {children && (
         <Background seed={children.toString().trim()} address={address} />
-      )} */}
+      )}
 
-      {background && <div dangerouslySetInnerHTML={{ __html: background }} />}
+      {/* {background && <div dangerouslySetInnerHTML={{ __html: background }} />}
 
       {children && !background && (
         <div>
           <Background seed={children.toString().trim()} address={address} />
         </div>
-      )}
+      )} */}
     </div>
   )
 }
