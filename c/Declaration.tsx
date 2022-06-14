@@ -179,15 +179,7 @@ const Declaration: React.FC<DeclarationProps> = ({
       </div>
 
       {children && (
-        <div
-          style={{
-            position: 'absolute',
-            inset: '0',
-            mixBlendMode: 'hard-light',
-          }}
-        >
-          <Background seed={children.toString().trim()} address={address} />
-        </div>
+        <Background seed={children.toString().trim()} address={address} />
       )}
 
       {/* {background && <div dangerouslySetInnerHTML={{ __html: background }} />}
