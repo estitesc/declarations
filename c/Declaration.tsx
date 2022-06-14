@@ -4,9 +4,6 @@ import { Textfit } from 'react-textfit'
 import seedrandom from 'seedrandom'
 import { Logo } from './Logo'
 import clsx from 'clsx'
-import srand from 'seeded-rand';
-
-let random = Math.random
 
 const defaultText =
   'We hold these truths to be self-evident, that all men are created equal, that they are endowed by their Creator with certain unalienable Rights, that among these are Life, Liberty and the pursuit of Happiness.'
@@ -26,7 +23,7 @@ const colorPalette = [
 ]
 
 const rand = (max: any) => {
-  return Math.floor(random.random() * max)
+  return Math.floor(Math.random() * max)
 }
 
 type RectProps = {
@@ -78,18 +75,13 @@ export const Background: React.FC<BackgroundProps> = ({
   address,
   ...rest
 }) => {
-  // seedrandom(seed, { global: true })
+  seedrandom(seed, { global: true })
   const colors = address ? getColorsFromAddress(address) : colorPalette
   const [isClient, setIsClient] = React.useState(false)
 
   React.useEffect(() => {
     setIsClient(true)
   }, [])
-
-  React.useEffect(() => {
-    srand.seed(seed)
-    random = srand
-  }, [seed])
 
   if (!isClient) {
     return null
@@ -172,7 +164,9 @@ const Declaration: React.FC<DeclarationProps> = ({
         />
       </div>
 
-      {children && <Background seed={children.toString()} address={address} />}
+      {children && (
+        <Background seed={children.toString().trim()} address={address} />
+      )}
     </div>
   )
 }

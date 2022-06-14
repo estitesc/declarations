@@ -144,7 +144,7 @@ const Mint: NextPage = () => {
       </div>
       <div className={styles.declaration}>
         <Declaration size='500px' compact address={walletAddress}>
-          {selection?.text}
+          {selection?.text.trim()}
         </Declaration>
 
         {walletAddress && selection && selection?.text !== '' && (
