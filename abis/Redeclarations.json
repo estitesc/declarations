@@ -38620,6 +38620,12 @@
     "version": "0.8.12+commit.f00d7308.Emscripten.clang"
   },
   "networks": {
+    "1": {
+      "events": {},
+      "links": {},
+      "address": "0x97e055beff6374760d76237385aea7277dc346b2",
+      "transactionHash": "0x2cb8ad299b774e64d087214d5d188f4831988b66315444fa682cd211556b9b70"
+    },
     "4": {
       "events": {},
       "links": {},
