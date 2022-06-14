@@ -13,7 +13,7 @@ const Home: NextPage = () => {
       <Declaration
         size={size.toString()}
         address={address as string}
-        // background={background as string}
+        background={background as string}
       >
         {text?.toString()}
       </Declaration>

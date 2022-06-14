@@ -46,7 +46,7 @@ const Mint: NextPage = () => {
       address: walletAddress,
       width: '1600',
       height: '1600',
-      // background: declarationBackground
+      background: declarationBackground
     }
 
     console.log('params are', params)
