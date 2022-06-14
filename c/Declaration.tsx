@@ -141,12 +141,6 @@ const Declaration: React.FC<DeclarationProps> = ({
   compact = false,
   background,
 }) => {
-  // const BackgroundToRender = background ? (
-  //   <div dangerouslySetInnerHTML={{ __html: background }} />
-  // ) : (
-  //   <Background seed={children.toString().trim()} address={address} />
-  // )
-
   return (
     <div
       className={clsx(styles.canvas, compact && 'compact')}
@@ -178,7 +172,7 @@ const Declaration: React.FC<DeclarationProps> = ({
         />
       </div>
 
-      {background && (
+      {background ? (
         <div
           style={{
             position: 'absolute',
@@ -189,9 +183,7 @@ const Declaration: React.FC<DeclarationProps> = ({
           }}
           dangerouslySetInnerHTML={{ __html: background }}
         />
-      )}
-
-      {children && !background && (
+      ) : (
         <div
           style={{
             position: 'absolute',
