@@ -125,7 +125,7 @@ const Mint: NextPage = () => {
                 setSelection({})
                 setTextSelKey(textSelKey + 1)
               }}
-              disabled={selection === null || selection?.text === ''}
+              disabled={selection === null || selection?.text === '' || loading}
             >
               Reset
             </button>
@@ -174,7 +174,7 @@ const Mint: NextPage = () => {
             Follow the project on Twitter
           </a>
           <a
-            href='https://discord.gg/s3PnU8wt'
+            href='https://discord.gg/m5Q3bbYeGT'
             className={styles.link}
             target='_blank'
             rel='noreferrer'
