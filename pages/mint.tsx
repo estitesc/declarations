@@ -37,7 +37,7 @@ const Mint: NextPage = () => {
     }
     setLoading(true)
     const params = {
-      text: selection.text,
+      text: selection.text.trim(),
       address: walletAddress,
       width: '1600',
       height: '1600',
