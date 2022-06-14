@@ -38,7 +38,7 @@ const Rect: React.FC<RectProps> = ({ fill, ...props }) => {
       width={rand(100 + 20)}
       height={rand(100 + 20)}
       rx={rand(10)}
-      filter={Math.random() < 0.8 ? 'url(#blur)' : undefined}
+      filter={rand(1) < 0.8 ? 'url(#blur)' : undefined}
       className={styles.backgroundRect}
       fill={fill}
       {...props}
