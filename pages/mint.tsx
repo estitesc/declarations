@@ -36,12 +36,19 @@ const Mint: NextPage = () => {
       return
     }
     setLoading(true)
+
+    const declarationBackground = document.getElementById(
+      'declaration-background'
+    )?.outerHTML
+
     const params = {
       text: selection.text.trim(),
       address: walletAddress,
       width: '1600',
       height: '1600',
+      background: declarationBackground
     }
+
     console.log('params are', params)
 
     //@ts-ignore
@@ -161,14 +168,16 @@ const Mint: NextPage = () => {
           <a
             href='https://twitter.com/RdclrtnsNFT'
             className={styles.link}
-            target='_blank' rel="noreferrer"
+            target='_blank'
+            rel='noreferrer'
           >
             Follow the project on Twitter
           </a>
           <a
             href='https://discord.gg/s3PnU8wt'
             className={styles.link}
-            target='_blank' rel="noreferrer"
+            target='_blank'
+            rel='noreferrer'
           >
             Join us on Discord
           </a>

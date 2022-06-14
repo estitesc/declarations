@@ -55,12 +55,6 @@
   mix-blend-mode: hard-light;
 }
 
-.background {
-  position: absolute;
-  inset: 0;
-  mix-blend-mode: hard-light; 
-}
-
 .backgroundRect { 
   mix-blend-mode: hard-light;
 }

@@ -91,7 +91,13 @@ export const Background: React.FC<BackgroundProps> = ({
     <svg
       xmlns='http://www.w3.org/2000/svg'
       viewBox='0 0 200 200'
-      className={styles.background + ' ' + className}
+      className={className}
+      style={{
+        position: 'absolute',
+        inset: '0',
+        mixBlendMode: 'hard-light',
+      }}
+      id='declaration-background'
       {...rest}
     >
       <filter id='blur'>
@@ -125,6 +131,7 @@ interface DeclarationProps {
   size?: string
   address?: string
   compact?: boolean
+  background?: string
 }
 
 const Declaration: React.FC<DeclarationProps> = ({
@@ -132,6 +139,7 @@ const Declaration: React.FC<DeclarationProps> = ({
   address,
   size,
   compact = false,
+  background,
 }) => {
   return (
     <div
@@ -164,8 +172,12 @@ const Declaration: React.FC<DeclarationProps> = ({
         />
       </div>
 
-      {children && (
-        <Background seed={children.toString().trim()} address={address} />
+      {background && <div dangerouslySetInnerHTML={{ __html: background }} />}
+
+      {children && !background && (
+        <div>
+          <Background seed={children.toString().trim()} address={address} />
+        </div>
       )}
     </div>
   )
