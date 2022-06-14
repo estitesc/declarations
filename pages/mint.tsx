@@ -67,7 +67,7 @@ const Mint: NextPage = () => {
     mint(imageUrl, selection.indices)
 
     setLoading(false)
-  }, [mint, selection.indices, selection.text, walletAddress])
+  }, [mint, selection.indices, selection.text, walletAddress, loading])
 
   return (
     <div className={styles.wrapper}>
@@ -144,7 +144,7 @@ const Mint: NextPage = () => {
       </div>
       <div className={styles.declaration}>
         <Declaration size='500px' compact address={walletAddress}>
-          {selection?.text.trim()}
+          {selection?.text}
         </Declaration>
 
         {walletAddress && selection && selection?.text !== '' && (
