@@ -11,6 +11,17 @@ import useConnectWallet from '../h/useConnectWallet'
 import Declaration from '../c/Declaration'
 import useMint from '../h/useMint'
 
+type DeclarationPreviewProps = {
+  walletAddress?: string;
+  selection?: any;
+  loading?: boolean;
+  onClick: () => void;
+  connectWalletAndStoreAddress: () => void;
+  setSelection: (arg0: any) => void;
+  setTextSelKey: (arg0: number) => void;
+  textSelKey: number
+}
+
 const DeclarationPreview = ({
   walletAddress,
   selection,
@@ -20,7 +31,7 @@ const DeclarationPreview = ({
   setSelection,
   setTextSelKey,
   textSelKey,
-}) => (
+}: DeclarationPreviewProps) => (
   <div className={styles.declaration}>
     <Declaration size='500px' compact address={walletAddress}>
       {selection?.text}
