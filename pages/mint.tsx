@@ -12,13 +12,13 @@ import Declaration from '../c/Declaration'
 import useMint from '../h/useMint'
 
 type DeclarationPreviewProps = {
-  walletAddress?: string;
-  selection?: any;
-  loading?: boolean;
-  onClick: () => void;
-  connectWalletAndStoreAddress: () => void;
-  setSelection: (arg0: any) => void;
-  setTextSelKey: (arg0: number) => void;
+  walletAddress?: string
+  selection?: any
+  loading?: boolean
+  onClick: () => void
+  connectWalletAndStoreAddress: () => void
+  setSelection: (arg0: any) => void
+  setTextSelKey: (arg0: number) => void
   textSelKey: number
 }
 
@@ -37,48 +37,46 @@ const DeclarationPreview = ({
       {selection?.text}
     </Declaration>
 
-    {!walletAddress && (
-      <button
-        className={clsx(styles.button)}
-        onClick={connectWalletAndStoreAddress}
-      >
-        Connect wallet to mint
-      </button>
-    )}
-
     {walletAddress && (!selection || selection.text == '') && (
       <div className={clsx(styles.subtitle, 'fluid-type')}>
-        Select bits of text from the Declaration of Independence to create your
+        Select words from the Declaration of Independence to create your
         redeclaration
       </div>
     )}
 
-    {walletAddress && selection && selection?.text !== '' && (
-      <div style={{ display: 'flex', gap: '1rem' }}>
-        {walletAddress && selection && selection?.text !== '' && (
-          <button
-            className={clsx(styles.button, styles.mintButton)}
-            onClick={onClick}
-            disabled={loading}
-          >
-            {loading ? 'Please wait...' : 'Mint your declaration'}
-          </button>
-        )}
+    <div style={{ display: 'flex', gap: '1rem' }}>
+      {!walletAddress && (
+        <button
+          className={clsx(styles.button)}
+          onClick={connectWalletAndStoreAddress}
+        >
+          Connect wallet to mint
+        </button>
+      )}
 
-        {!(selection === null || selection?.text === '' || loading) && (
-          <button
-            className={styles.button}
-            onClick={() => {
-              setSelection({})
-              setTextSelKey(textSelKey + 1)
-            }}
-            disabled={selection === null || selection?.text === '' || loading}
-          >
-            Reset selection
-          </button>
-        )}
-      </div>
-    )}
+      {walletAddress && selection && selection?.text !== '' && (
+        <button
+          className={clsx(styles.button, styles.mintButton)}
+          onClick={onClick}
+          disabled={loading}
+        >
+          {loading ? 'Please wait...' : 'Mint your declaration'}
+        </button>
+      )}
+
+      {!(selection === null || selection?.text === '' || loading) && (
+        <button
+          className={styles.button}
+          onClick={() => {
+            setSelection({})
+            setTextSelKey(textSelKey + 1)
+          }}
+          disabled={selection === null || selection?.text === '' || loading}
+        >
+          Reset selection
+        </button>
+      )}
+    </div>
 
     <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
       {walletAddress && (
@@ -196,6 +194,9 @@ const Mint: NextPage = () => {
                   Click on another word to select all of the text between the
                   two words. If you’d like to select a single word, click on the
                   first word again to end the selection.
+                </li>
+                <li>
+                  Click on any word within a selection to delete the entire selection.
                 </li>
                 <li>
                   When you’re happy with your selection, connect your wallet to
