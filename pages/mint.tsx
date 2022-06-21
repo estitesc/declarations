@@ -11,6 +11,97 @@ import useConnectWallet from '../h/useConnectWallet'
 import Declaration from '../c/Declaration'
 import useMint from '../h/useMint'
 
+type DeclarationPreviewProps = {
+  walletAddress?: string
+  selection?: any
+  loading?: boolean
+  onClick: () => void
+  connectWalletAndStoreAddress: () => void
+  setSelection: (arg0: any) => void
+  setTextSelKey: (arg0: number) => void
+  textSelKey: number
+}
+
+const DeclarationPreview = ({
+  walletAddress,
+  selection,
+  loading,
+  onClick,
+  connectWalletAndStoreAddress,
+  setSelection,
+  setTextSelKey,
+  textSelKey,
+}: DeclarationPreviewProps) => (
+  <div className={styles.declaration}>
+    <Declaration size='500px' compact address={walletAddress}>
+      {selection?.text}
+    </Declaration>
+
+    {walletAddress && (!selection || selection.text == '') && (
+      <div className={clsx(styles.subtitle, 'fluid-type')}>
+        Select words from the Declaration of Independence to create your
+        redeclaration
+      </div>
+    )}
+
+    <div style={{ display: 'flex', gap: '1rem' }}>
+      {!walletAddress && (
+        <button
+          className={clsx(styles.button)}
+          onClick={connectWalletAndStoreAddress}
+        >
+          Connect wallet to mint
+        </button>
+      )}
+
+      {walletAddress && selection && selection?.text !== '' && (
+        <button
+          className={clsx(styles.button, styles.mintButton)}
+          onClick={onClick}
+          disabled={loading}
+        >
+          {loading ? 'Please wait...' : 'Mint your declaration'}
+        </button>
+      )}
+
+      {!(selection === null || selection?.text === '' || loading) && (
+        <button
+          className={styles.button}
+          onClick={() => {
+            setSelection({})
+            setTextSelKey(textSelKey + 1)
+          }}
+          disabled={selection === null || selection?.text === '' || loading}
+        >
+          Reset selection
+        </button>
+      )}
+    </div>
+
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
+      {walletAddress && (
+        <div className={styles.walletAddress}>Connected: {walletAddress}</div>
+      )}
+      <a
+        href='https://twitter.com/RdclrtnsNFT'
+        className={styles.link}
+        target='_blank'
+        rel='noreferrer'
+      >
+        Follow the project on Twitter
+      </a>
+      <a
+        href='https://discord.gg/m5Q3bbYeGT'
+        className={styles.link}
+        target='_blank'
+        rel='noreferrer'
+      >
+        Join us on Discord
+      </a>
+    </div>
+  </div>
+)
+
 const Mint: NextPage = () => {
   const [selection, setSelection] = React.useState<any>({})
   const [textSelKey, setTextSelKey] = React.useState(0)
@@ -46,7 +137,7 @@ const Mint: NextPage = () => {
       address: walletAddress,
       width: '1600',
       height: '1600',
-      background: declarationBackground
+      background: declarationBackground,
     }
 
     console.log('params are', params)
@@ -77,25 +168,11 @@ const Mint: NextPage = () => {
   }, [mint, selection.indices, selection.text, walletAddress, loading])
 
   return (
-    <div className={styles.wrapper}>
+    <div className={clsx(styles.wrapper, loading && styles.wrapperLoading)}>
       <div className={styles.container}>
         <div>
           <header className={styles.header}>
             <Logo className={styles.logo} />
-            {/* <p
-              className={clsx(styles.subtitle, 'fluid-type')}
-              style={{ marginBottom: '0.75em', marginTop: '1em' }}
-            >
-              A reclaiming of the Declaration of Independence by those who never
-              signed it.
-            </p>
-            <p
-              className={clsx(styles.subtitle, 'fluid-type')}
-              style={{ marginBottom: '0.75em', marginTop: '1em' }}
-            >
-              Reclaim yours by connecting a wallet and selecting up to 40 words
-              that you will make your own.
-            </p> */}
             <p
               className={clsx(styles.subtitle, 'fluid-type')}
               style={{ marginTop: '1em' }}
@@ -107,82 +184,73 @@ const Mint: NextPage = () => {
               today’s America and redefining the nation as ours. All of us. Join
               us.
             </p>
+            <div className={styles.instructions}>
+              <p style={{ marginTop: '1.5em' }}>
+                Here’s how to create your own:
+              </p>
+              <ol style={{ marginTop: '1em' }}>
+                <li>Click a word to begin a selection.</li>
+                <li>
+                  Click on another word to select all of the text between the
+                  two words. If you’d like to select a single word, click on the
+                  first word again to end the selection.
+                </li>
+                <li>
+                  Click on any word within a selection to delete the entire selection.
+                </li>
+                <li>
+                  When you’re happy with your selection, connect your wallet to
+                  mint your redeclaration.
+                </li>
+              </ol>
+            </div>
           </header>
 
-          <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-            <button
-              className={clsx(
-                styles.button,
-                walletAddress && styles.buttonWalletConnected
-              )}
-              onClick={connectWalletAndStoreAddress}
-            >
-              {walletAddress ? `Connected: ${walletAddress}` : 'Connect wallet'}
-            </button>
-            <button
-              className={styles.button}
-              onClick={() => {
-                setSelection({})
-                setTextSelKey(textSelKey + 1)
-              }}
-              disabled={selection === null || selection?.text === '' || loading}
-            >
-              Reset
-            </button>
+          <div className={styles.mobileOnly} style={{ margin: '4rem 0 2rem' }}>
+            <DeclarationPreview
+              walletAddress={walletAddress}
+              onClick={generateAndMint}
+              loading={loading}
+              selection={selection}
+              connectWalletAndStoreAddress={connectWalletAndStoreAddress}
+              setSelection={setSelection}
+              setTextSelKey={setTextSelKey}
+              textSelKey={textSelKey}
+            />
           </div>
 
-          <div
-            style={{
-              margin: '3rem 0 1rem',
-              textTransform: 'uppercase',
-              color: '#888',
-              fontSize: '0.8rem',
-            }}
-          >
-            ↓ click to start and end a selection
+          <div className={styles.declarationText}>
+            <TextSelector
+              key={textSelKey}
+              text={declarationText}
+              onChange={onChange}
+            />
           </div>
-
-          <TextSelector
-            key={textSelKey}
-            text={declarationText}
-            onChange={onChange}
-          />
         </div>
       </div>
-      <div className={styles.declaration}>
-        <Declaration size='500px' compact address={walletAddress}>
-          {selection?.text}
-        </Declaration>
 
-        {walletAddress && selection && selection?.text !== '' && (
-          <button
-            className={clsx(styles.button, styles.mintButton)}
-            onClick={generateAndMint}
-            disabled={loading}
-          >
-            {loading ? 'Please wait...' : 'Mint'}
-          </button>
-        )}
-
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
-          <a
-            href='https://twitter.com/RdclrtnsNFT'
-            className={styles.link}
-            target='_blank'
-            rel='noreferrer'
-          >
-            Follow the project on Twitter
-          </a>
-          <a
-            href='https://discord.gg/m5Q3bbYeGT'
-            className={styles.link}
-            target='_blank'
-            rel='noreferrer'
-          >
-            Join us on Discord
-          </a>
-        </div>
+      <div className={styles.desktopOnly}>
+        <DeclarationPreview
+          walletAddress={walletAddress}
+          onClick={generateAndMint}
+          loading={loading}
+          selection={selection}
+          connectWalletAndStoreAddress={connectWalletAndStoreAddress}
+          setSelection={setSelection}
+          setTextSelKey={setTextSelKey}
+          textSelKey={textSelKey}
+        />
       </div>
+
+      {loading && (
+        <div className={styles.loadingMessage}>
+          <span className={styles.loader}></span>
+          <div>
+            Hold tight, your redeclaration is being generated. This process can
+            take up to a minute or two.
+          </div>
+        </div>
+      )}
     </div>
   )
 }
