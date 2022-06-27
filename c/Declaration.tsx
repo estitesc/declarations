@@ -144,6 +144,7 @@ const Declaration: React.FC<DeclarationProps> = ({
   return (
     <div
       className={clsx(styles.canvas, compact && 'compact')}
+      data-canvas
       style={{
         height: size,
         width: size,
