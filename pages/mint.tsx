@@ -1,7 +1,5 @@
 import React from "react";
 import type { NextPage } from "next";
-import Head from "next/head";
-import Image from "next/image";
 import styles from "../styles/Mint.module.css";
 import clsx from "clsx";
 import { Logo } from "../c/Logo";
@@ -126,11 +124,18 @@ const Mint: NextPage = () => {
     undefined
   );
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState(false);
 
   const { query } = useRouter();
   console.log("query is ", query, query.ownerId);
 
-  const { mint } = useMint(query.ownerId as string | undefined);
+  const onCompleteMint = React.useCallback((result: string) => {
+    if (result === "error") {
+      setError(true);
+    }
+  }, []);
+
+  const { mint } = useMint(query.ownerId as string | undefined, onCompleteMint);
 
   const onChange = React.useCallback((selection: any) => {
     setSelection(selection);
@@ -185,7 +190,11 @@ const Mint: NextPage = () => {
     const imageUrl = data.result;
 
     console.log("now trying to mint with", imageUrl, selection.indices);
-    mint(imageUrl, selection.indices);
+    try {
+      mint(imageUrl, selection.indices);
+    } catch (err) {
+      console.log("error is", err);
+    }
 
     setLoading(false);
   }, [mint, selection.indices, selection.text, walletAddress, loading]);
@@ -274,6 +283,14 @@ const Mint: NextPage = () => {
           <div>
             Hold tight, your redeclaration is being generated. This process can
             take up to a minute or two.
+          </div>
+        </div>
+      )}
+      {error && (
+        <div className={styles.loadingMessage} onClick={() => setError(false)}>
+          <div>
+            Someone has already minted that declaration! Try changing it up a
+            bit. (click here to close)
           </div>
         </div>
       )}

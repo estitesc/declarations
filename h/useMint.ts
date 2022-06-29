@@ -3,7 +3,7 @@ import Redeclarations from "../abis/Redeclarations.json";
 import { ethers } from "ethers";
 import useNetwork from "./useNetwork";
 
-const useMint = (ownerId?: string) => {
+const useMint = (ownerId?: string, onComplete: (result: string) => void) => {
   const { setupNetwork } = useNetwork();
 
   const mint = React.useCallback(
@@ -20,48 +20,53 @@ const useMint = (ownerId?: string) => {
         );
         (async () => {
           let result;
-          switch (ownerId) {
-            case "esc":
-              console.log("doing ESC mint");
-              result = await contract.ownerMint(
-                tokenUri,
-                JSON.stringify(indices)
-              );
-              break;
-            case "chase":
-              result = await contract.owner2Mint(
-                tokenUri,
-                JSON.stringify(indices)
-              );
-              break;
-            case "halim":
-              result = await contract.owner3Mint(
-                tokenUri,
-                JSON.stringify(indices)
-              );
-              break;
-            case "vv":
-              console.log("doing VV mint");
-              result = await contract.owner4Mint(
-                tokenUri,
-                JSON.stringify(indices)
-              );
-              break;
-            default:
-              console.log("doing Default Public mint");
-              result = await contract.publicMint(
-                tokenUri,
-                JSON.stringify(indices)
-              );
-              break;
+          try {
+            switch (ownerId) {
+              case "esc":
+                console.log("doing ESC mint");
+                result = await contract.ownerMint(
+                  tokenUri,
+                  JSON.stringify(indices)
+                );
+                break;
+              case "chase":
+                result = await contract.owner2Mint(
+                  tokenUri,
+                  JSON.stringify(indices)
+                );
+                break;
+              case "halim":
+                result = await contract.owner3Mint(
+                  tokenUri,
+                  JSON.stringify(indices)
+                );
+                break;
+              case "vv":
+                console.log("doing VV mint");
+                result = await contract.owner4Mint(
+                  tokenUri,
+                  JSON.stringify(indices)
+                );
+                break;
+              default:
+                console.log("doing Default Public mint");
+                result = await contract.publicMint(
+                  tokenUri,
+                  JSON.stringify(indices)
+                );
+                break;
+            }
+          } catch (e) {
+            result = "error";
           }
           console.log("mint result", result);
+          onComplete(result);
         })();
       } else {
         console.log("Redeclarations not deployed to the network in question");
       }
     },
-    [ownerId, setupNetwork]
+    [onComplete, ownerId, setupNetwork]
   );
 
   return {
