@@ -10,6 +10,12 @@ import Declaration from "../c/Declaration";
 import useMint from "../h/useMint";
 import { useRouter } from "next/router";
 
+declare global {
+  interface Window {
+    ethereum: any;
+  }
+}
+
 type DeclarationPreviewProps = {
   walletAddress?: string;
   selection?: any;
