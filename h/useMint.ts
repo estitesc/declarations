@@ -3,7 +3,7 @@ import Redeclarations from "../abis/Redeclarations.json";
 import { ethers } from "ethers";
 import useNetwork from "./useNetwork";
 
-const useMint = (ownerId?: string, onComplete: (result: string) => void) => {
+const useMint = (onComplete: (result: string) => void, ownerId?: string) => {
   const { setupNetwork } = useNetwork();
 
   const mint = React.useCallback(

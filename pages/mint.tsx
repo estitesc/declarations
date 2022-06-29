@@ -135,7 +135,7 @@ const Mint: NextPage = () => {
     }
   }, []);
 
-  const { mint } = useMint(query.ownerId as string | undefined, onCompleteMint);
+  const { mint } = useMint(onCompleteMint, query.ownerId as string | undefined);
 
   const onChange = React.useCallback((selection: any) => {
     setSelection(selection);
