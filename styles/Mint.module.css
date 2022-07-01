@@ -205,12 +205,20 @@
   color: #555;
 }
 
+.instructions a {
+  color: #888;
+}
+
 .instructions ol {
   padding-left: 1.25em;
 }
 
 .instructions li + li {
   margin-top: 0.5em;
+}
+
+.instructions li::marker {
+  font-weight: bold;
 }
 
 .loader {
