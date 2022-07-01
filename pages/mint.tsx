@@ -13,7 +13,7 @@ import useGetDecls from "../h/useGetDecls";
 
 declare global {
   interface Window {
-    ethereum: any
+    ethereum: any;
   }
 }
 
@@ -54,19 +54,19 @@ const DeclarationPreview = ({
 
   return (
     <>
-      <Declaration size='500px' compact address={walletAddress}>
+      <Declaration size="500px" compact address={walletAddress}>
         {selection?.text}
       </Declaration>
 
-      <div className={styles.declaration} style={{ marginTop: '1rem' }}>
-        {walletAddress && (!selection || selection.text == '') && (
-          <div className={clsx(styles.subtitle, 'fluid-type')}>
+      <div className={styles.declaration} style={{ marginTop: "1rem" }}>
+        {walletAddress && (!selection || selection.text == "") && (
+          <div className={clsx(styles.subtitle, "fluid-type")}>
             Select words from the Declaration of Independence to create your
             redeclaration
           </div>
         )}
 
-        <div style={{ display: 'flex', gap: '1rem' }}>
+        <div style={{ display: "flex", gap: "1rem" }}>
           {!walletAddress && (
             <button
               className={clsx(styles.button)}
@@ -76,7 +76,7 @@ const DeclarationPreview = ({
             </button>
           )}
 
-          {walletAddress && selection && selection?.text !== '' && (
+          {walletAddress && selection && selection?.text !== "" && (
             <button
               className={clsx(styles.button, styles.mintButton)}
               onClick={onClick}
@@ -86,59 +86,59 @@ const DeclarationPreview = ({
             </button>
           )}
 
-          {!(selection === null || selection?.text === '' || loading) && (
+          {!(selection === null || selection?.text === "" || loading) && (
             <button
               className={styles.button}
               onClick={() => {
-                setSelection({})
-                setTextSelKey(textSelKey + 1)
+                setSelection({});
+                setTextSelKey(textSelKey + 1);
               }}
-              disabled={selection === null || selection?.text === '' || loading}
+              disabled={selection === null || selection?.text === "" || loading}
             >
               Reset selection
             </button>
           )}
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '.5rem' }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: ".5rem" }}>
           {walletAddress && (
             <div className={styles.walletAddress}>
               Connected: {walletAddress}
             </div>
           )}
           <a
-            href='https://twitter.com/RdclrtnsNFT'
+            href="https://twitter.com/RdclrtnsNFT"
             className={styles.link}
-            target='_blank'
-            rel='noreferrer'
+            target="_blank"
+            rel="noreferrer"
           >
             Follow the project on Twitter
           </a>
           <a
-            href='https://discord.gg/m5Q3bbYeGT'
+            href="https://discord.gg/m5Q3bbYeGT"
             className={styles.link}
-            target='_blank'
-            rel='noreferrer'
+            target="_blank"
+            rel="noreferrer"
           >
             Join us on Discord
           </a>
           <a
-            href='https://opensea.io/collection/rdclrtns'
+            href="https://opensea.io/collection/rdclrtns"
             className={styles.link}
-            target='_blank'
-            rel='noreferrer'
+            target="_blank"
+            rel="noreferrer"
           >
             View on OpenSea
           </a>
         </div>
       </div>
     </>
-  )
-}
+  );
+};
 
 const Mint: NextPage = () => {
-  const [selection, setSelection] = React.useState<any>({})
-  const [textSelKey, setTextSelKey] = React.useState(0)
+  const [selection, setSelection] = React.useState<any>({});
+  const [textSelKey, setTextSelKey] = React.useState(0);
   const [walletAddress, setWalletAddress] = React.useState<string | undefined>(
     undefined
   );
@@ -147,8 +147,8 @@ const Mint: NextPage = () => {
   const [allDecls, setAllDecls] = React.useState([] as any);
   const [declTaken, setDeclTaken] = React.useState(false);
 
-  const { query } = useRouter()
-  console.log('query is ', query, query.ownerId)
+  const { query } = useRouter();
+  console.log("query is ", query, query.ownerId);
 
   const getDecls = useGetDecls();
   React.useEffect(() => {
@@ -159,12 +159,12 @@ const Mint: NextPage = () => {
   }, []);
 
   const onCompleteMint = React.useCallback((result: string) => {
-    if (result === 'error') {
-      setError(true)
+    if (result === "error") {
+      setError(true);
     }
-  }, [])
+  }, []);
 
-  const { mint } = useMint(onCompleteMint, query.ownerId as string | undefined)
+  const { mint } = useMint(onCompleteMint, query.ownerId as string | undefined);
 
   React.useEffect(() => {
     const allIndices = allDecls.map((decl: any) => decl.indices);
@@ -176,63 +176,66 @@ const Mint: NextPage = () => {
   }, [allDecls, selection.indices]);
 
   const onChange = React.useCallback((selection: any) => {
-    setSelection(selection)
-  }, [])
+    setSelection(selection);
+  }, []);
 
-  const connectWallet = useConnectWallet()
+  const connectWallet = useConnectWallet();
   const connectWalletAndStoreAddress = React.useCallback(async () => {
-    const address = await connectWallet()
-    setWalletAddress(address)
-  }, [connectWallet])
+    const address = await connectWallet();
+    setWalletAddress(address);
+  }, [connectWallet]);
 
   const generateAndMint = React.useCallback(async () => {
     if (loading) {
-      return
+      return;
     }
-    setLoading(true)
+    setLoading(true);
 
     const declarationBackground = document.getElementById(
-      'declaration-background'
-    )?.outerHTML
+      "declaration-background"
+    )?.outerHTML;
 
     const params = {
       text: selection.text.trim(),
       address: walletAddress,
-      width: '1600',
-      height: '1600',
+      width: "1600",
+      height: "1600",
       background: declarationBackground,
-    }
+    };
 
-    console.log('params are', params)
+    console.log("params are", params);
 
     //@ts-ignore
-    const paramString = new URLSearchParams(params).toString()
+    const paramString = new URLSearchParams(params).toString();
     const generateAndPinUrl = `https://screenshot-khaki.vercel.app/api?url=https://www.redeclarations.com/declaration?${new URLSearchParams(
       paramString
-    ).toString()}`
-    console.log('generate and pin URL is', generateAndPinUrl)
+    ).toString()}`;
+    console.log("generate and pin URL is", generateAndPinUrl);
 
     const response = await fetch(generateAndPinUrl, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
-    })
+    });
 
-    console.log('got response after generating and pinning the image', response)
+    console.log(
+      "got response after generating and pinning the image",
+      response
+    );
 
-    const data = await response.json()
-    const imageUrl = data.result
+    const data = await response.json();
+    const imageUrl = data.result;
 
-    console.log('now trying to mint with', imageUrl, selection.indices)
+    console.log("now trying to mint with", imageUrl, selection.indices);
     try {
-      mint(imageUrl, selection.indices)
+      mint(imageUrl, selection.indices);
     } catch (err) {
-      console.log('error is', err)
+      console.log("error is", err);
     }
 
-    setLoading(false)
-  }, [mint, selection.indices, selection.text, walletAddress, loading])
+    setLoading(false);
+  }, [mint, selection.indices, selection.text, walletAddress, loading]);
 
   return (
     <div className={clsx(styles.wrapper, loading && styles.wrapperLoading)}>
@@ -241,8 +244,8 @@ const Mint: NextPage = () => {
           <header className={styles.header}>
             <Logo className={styles.logo} />
             <p
-              className={clsx(styles.subtitle, 'fluid-type')}
-              style={{ marginTop: '1em' }}
+              className={clsx(styles.subtitle, "fluid-type")}
+              style={{ marginTop: "1em" }}
             >
               The Declaration of Independence marked America’s exit from the
               British Empire. By minting bits of the old declaration and
@@ -252,10 +255,10 @@ const Mint: NextPage = () => {
               us.
             </p>
             <div className={styles.instructions}>
-              <p style={{ marginTop: '1.5em' }}>
+              <p style={{ marginTop: "1.5em" }}>
                 Here’s how to create your own:
               </p>
-              <ol style={{ marginTop: '1em' }}>
+              <ol style={{ marginTop: "1em" }}>
                 <li>
                   <b>Select:</b> Click twice on a word to select only that word.
                   Click on a word and then another to select a range. 40 words
@@ -263,11 +266,11 @@ const Mint: NextPage = () => {
                 </li>
                 <li>
                   <b>Get creative:</b> <i>Each redeclaration is unique!</i> So
-                  get creative! View existing ones on{' '}
+                  get creative! View existing ones on{" "}
                   <a
-                    href='https://opensea.io/collection/rdclrtns'
-                    target='_blank'
-                    rel='noreferrer'
+                    href="https://opensea.io/collection/rdclrtns"
+                    target="_blank"
+                    rel="noreferrer"
                   >
                     Opensea
                   </a>
@@ -307,7 +310,7 @@ const Mint: NextPage = () => {
 
       <div
         className={styles.desktopOnly}
-        style={{ position: 'sticky', top: '2rem' }}
+        style={{ position: "sticky", top: "2rem" }}
       >
         <DeclarationPreview
           walletAddress={walletAddress}
@@ -340,7 +343,7 @@ const Mint: NextPage = () => {
         </div>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default Mint
+export default Mint;
