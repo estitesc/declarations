@@ -47,9 +47,9 @@ const DeclarationPreview = ({
       return "Please wait...";
     }
     if (declTaken) {
-      return "Already minted!";
+      return "This redeclaration is taken";
     }
-    return "Mint your declaration";
+    return "Mint your redeclaration";
   };
 
   return (
