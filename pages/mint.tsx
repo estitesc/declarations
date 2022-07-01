@@ -144,6 +144,7 @@ const Mint: NextPage = () => {
   );
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
+  const [success, setSuccess] = React.useState(true);
   const [allDecls, setAllDecls] = React.useState([] as any);
   const [declTaken, setDeclTaken] = React.useState(false);
 
@@ -161,6 +162,8 @@ const Mint: NextPage = () => {
   const onCompleteMint = React.useCallback((result: string) => {
     if (result === "error") {
       setError(true);
+    } else {
+      setSuccess(true);
     }
   }, []);
 
@@ -238,7 +241,12 @@ const Mint: NextPage = () => {
   }, [mint, selection.indices, selection.text, walletAddress, loading]);
 
   return (
-    <div className={clsx(styles.wrapper, loading && styles.wrapperLoading)}>
+    <div
+      className={clsx(
+        styles.wrapper,
+        (loading || error || success) && styles.wrapperLoading
+      )}
+    >
       <div className={styles.container}>
         <div>
           <header className={styles.header}>
@@ -339,6 +347,20 @@ const Mint: NextPage = () => {
           <div>
             Someone has already minted that declaration! Try changing it up a
             bit. (click here to close)
+          </div>
+        </div>
+      )}
+      {success && (
+        <div
+          className={styles.loadingMessage}
+          onClick={() => {
+            setSuccess(false);
+            setSelection({});
+            setTextSelKey(textSelKey + 1);
+          }}
+        >
+          <div>
+            Congrats, you minted a redeclaration! (click here to start again)
           </div>
         </div>
       )}
