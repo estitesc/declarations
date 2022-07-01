@@ -9,6 +9,7 @@ import useConnectWallet from "../h/useConnectWallet";
 import Declaration from "../c/Declaration";
 import useMint from "../h/useMint";
 import { useRouter } from "next/router";
+import useGetDecls from "../h/useGetDecls";
 
 declare global {
   interface Window {
@@ -20,6 +21,7 @@ type DeclarationPreviewProps = {
   walletAddress?: string;
   selection?: any;
   loading?: boolean;
+  declTaken?: boolean;
   onClick: () => void;
   connectWalletAndStoreAddress: () => void;
   setSelection: (arg0: any) => void;
@@ -32,6 +34,7 @@ const DeclarationPreview = ({
   walletAddress,
   selection,
   loading,
+  declTaken,
   onClick,
   connectWalletAndStoreAddress,
   setSelection,
@@ -39,6 +42,16 @@ const DeclarationPreview = ({
   textSelKey,
   mobile = false,
 }: DeclarationPreviewProps) => {
+  const getMintLabel = () => {
+    if (loading) {
+      return "Please wait...";
+    }
+    if (declTaken) {
+      return "Already minted!";
+    }
+    return "Mint your declaration";
+  };
+
   return (
     <>
       <Declaration size="500px" compact address={walletAddress}>
@@ -67,9 +80,9 @@ const DeclarationPreview = ({
             <button
               className={clsx(styles.button, styles.mintButton)}
               onClick={onClick}
-              disabled={loading}
+              disabled={loading || declTaken}
             >
-              {loading ? "Please wait..." : "Mint your declaration"}
+              {getMintLabel()}
             </button>
           )}
 
@@ -131,9 +144,19 @@ const Mint: NextPage = () => {
   );
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
+  const [allDecls, setAllDecls] = React.useState([] as any);
+  const [declTaken, setDeclTaken] = React.useState(false);
 
   const { query } = useRouter();
   console.log("query is ", query, query.ownerId);
+
+  const getDecls = useGetDecls();
+  React.useEffect(() => {
+    (async () => {
+      const decls = await getDecls();
+      setAllDecls(decls);
+    })();
+  }, []);
 
   const onCompleteMint = React.useCallback((result: string) => {
     if (result === "error") {
@@ -142,6 +165,15 @@ const Mint: NextPage = () => {
   }, []);
 
   const { mint } = useMint(onCompleteMint, query.ownerId as string | undefined);
+
+  React.useEffect(() => {
+    const allIndices = allDecls.map((decl: any) => decl.indices);
+    if (allIndices.includes(JSON.stringify(selection.indices))) {
+      setDeclTaken(true);
+    } else {
+      setDeclTaken(false);
+    }
+  }, [allDecls, selection.indices]);
 
   const onChange = React.useCallback((selection: any) => {
     setSelection(selection);
@@ -249,6 +281,7 @@ const Mint: NextPage = () => {
             walletAddress={walletAddress}
             onClick={generateAndMint}
             loading={loading}
+            declTaken={declTaken}
             selection={selection}
             connectWalletAndStoreAddress={connectWalletAndStoreAddress}
             setSelection={setSelection}
@@ -275,6 +308,7 @@ const Mint: NextPage = () => {
           walletAddress={walletAddress}
           onClick={generateAndMint}
           loading={loading}
+          declTaken={declTaken}
           selection={selection}
           connectWalletAndStoreAddress={connectWalletAndStoreAddress}
           setSelection={setSelection}
