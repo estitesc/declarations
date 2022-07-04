@@ -155,7 +155,7 @@ const Declaration: React.FC<DeclarationProps> = ({
         key={children?.toString()}
         mode='multi'
         className={styles.text}
-        max={compact ? 100 : 200}
+        max={compact ? 100 : 300}
         style={{ paddingBottom: compact ? '1.5rem' : '4rem' }}
       >
         {children}
