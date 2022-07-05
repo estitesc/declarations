@@ -144,7 +144,7 @@ const Mint: NextPage = () => {
   );
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = React.useState(false);
-  const [success, setSuccess] = React.useState(true);
+  const [success, setSuccess] = React.useState(false);
   const [allDecls, setAllDecls] = React.useState([] as any);
   const [declTaken, setDeclTaken] = React.useState(false);
 
